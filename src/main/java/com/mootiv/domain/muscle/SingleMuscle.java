@@ -24,10 +24,4 @@ public class SingleMuscle extends Muscle {
         return false;
     }
 
-    @Override
-    public void associateMuscles(List<Muscle> muscles) {
-        throw new RuntimeException("No valid operation for a single muscle");
-    }
-
-
 }

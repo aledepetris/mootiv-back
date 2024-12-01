@@ -34,8 +34,6 @@ public abstract class Muscle {
 
     public abstract boolean isAMuscleGroup();
 
-    public abstract void associateMuscles(List<Muscle> muscles);
-
     protected Muscle(String name) {
         this.name = name;
     }
@@ -49,18 +47,16 @@ public abstract class Muscle {
 
     public static Muscle with(String name, List<Muscle> musclesAssociated, List<Exercise> exercisesAssociated) {
 
-        Muscle muscle;
         if (nonNull(musclesAssociated) && !musclesAssociated.isEmpty()) {
-            muscle = new MuscleGroup(name);
-            muscle.associateMuscles(musclesAssociated);
+            var groupMuscle = new MuscleGroup(name);
+            groupMuscle.associateMuscles(musclesAssociated);
+            exercisesAssociated.forEach(groupMuscle::addExcercise);
+            return groupMuscle;
         } else {
-            muscle = new SingleMuscle(name);
-        }
-
-        if (nonNull(exercisesAssociated))
+            var muscle = new SingleMuscle(name);
             exercisesAssociated.forEach(muscle::addExcercise);
-
-        return muscle;
+            return muscle;
+        }
 
     }
 

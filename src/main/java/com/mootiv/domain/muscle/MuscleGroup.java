@@ -33,7 +33,6 @@ public class MuscleGroup extends Muscle {
         return true;
     }
 
-    @Override
     public void associateMuscles(List<Muscle> muscles) {
         if (isNull(this.muscles)) {
             this.muscles = muscles;

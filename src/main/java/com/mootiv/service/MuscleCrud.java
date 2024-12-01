@@ -42,8 +42,11 @@ public class MuscleCrud implements MuscleCrudService {
         List<Exercise> exercises = null;
         List<Muscle> muscles = null;
 
-        muscleRepository.findByName(bodyRequest.getName())
-                .orElseThrow(BusinessException.of(MUSCLE_ALREADY_CREATED));
+        var muscle = muscleRepository.findByName(bodyRequest.getName());
+
+        if (muscle.isPresent()) {
+            throw new BusinessException(MUSCLE_ALREADY_CREATED);
+        }
 
         if (nonNull(bodyRequest.getIdExcersices()))
             exercises = exersiceRepository.findListByIds(bodyRequest.getIdExcersices());
@@ -64,7 +67,6 @@ public class MuscleCrud implements MuscleCrudService {
 
     @Override
     public MuscleResponse getMuscle(Integer id) {
-
         return muscleRepository.findById(id)
                 .map(MuscleResponse::mapFromMuscle)
                 .orElseThrow(NotFoundException.of(MUSCLE_NOT_FOUND));
@@ -74,4 +76,5 @@ public class MuscleCrud implements MuscleCrudService {
     public void deleteMuscle(Integer id) {
         muscleRepository.deleteById(id);
     }
+
 }
