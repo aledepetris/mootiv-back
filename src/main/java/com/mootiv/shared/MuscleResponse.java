@@ -9,6 +9,8 @@ import lombok.Getter;
 import lombok.Setter;
 
 import java.util.List;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 @Builder
 @Getter @Setter
@@ -19,9 +21,9 @@ public class MuscleResponse {
     @NotBlank
     private String name;
 
-    private List<Exercise> exercises;
+    private Set<Exercise> exercises;
 
-    private List<MuscleResponse> muscles;
+    private Set<MuscleResponse> muscles;
 
     public static MuscleResponse mapFromMuscle(Muscle muscle) {
         var builder = MuscleResponse.builder()
@@ -33,7 +35,7 @@ public class MuscleResponse {
             MuscleGroup group = (MuscleGroup) muscle;
             builder.muscles(group.getMuscles().stream()
                     .map(MuscleResponse::mapFromMuscle)
-                    .toList());
+                    .collect(Collectors.toSet()));
 
         }
 

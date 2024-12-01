@@ -6,6 +6,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import java.util.List;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 import static java.util.Objects.isNull;
 
@@ -15,17 +17,17 @@ import static java.util.Objects.isNull;
 public class MuscleGroup extends Muscle {
 
     @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.DETACH)
-    List<Muscle> muscles;
+    Set<Muscle> muscles;
 
     public MuscleGroup(String name) {
         super(name);
     }
 
     @Override
-    public List<Exercise> getAssociatedExcercise() {
+    public Set<Exercise> getAssociatedExcercise() {
         return muscles.stream()
                 .flatMap(muscle -> muscle.getAssociatedExcercise().stream())
-                .toList();
+                .collect(Collectors.toSet());
     }
 
     @Override
@@ -33,7 +35,14 @@ public class MuscleGroup extends Muscle {
         return true;
     }
 
-    public void associateMuscles(List<Muscle> muscles) {
+    @Override
+    public void update(String name, Set<Muscle> muscles, Set<Exercise> exercises) {
+        this.name = name;
+        this.muscles = muscles;
+        this.exercises = exercises;
+    }
+
+    public void associateMuscles(Set<Muscle> muscles) {
         if (isNull(this.muscles)) {
             this.muscles = muscles;
         } else {

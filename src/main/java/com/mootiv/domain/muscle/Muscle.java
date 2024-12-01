@@ -5,9 +5,8 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Objects;
+import java.util.HashSet;
+import java.util.Set;
 
 import static java.util.Objects.isNull;
 import static java.util.Objects.nonNull;
@@ -27,26 +26,25 @@ public abstract class Muscle {
     protected String name;
 
     @ManyToMany(fetch = FetchType.LAZY)
-    protected List<Exercise> exercises;
+    protected Set<Exercise> exercises;
 
 
-    public abstract List<Exercise> getAssociatedExcercise();
-
+    public abstract Set<Exercise> getAssociatedExcercise();
     public abstract boolean isAMuscleGroup();
+    public abstract void update(String name, Set<Muscle> muscles, Set<Exercise> exercises);
 
     protected Muscle(String name) {
         this.name = name;
     }
 
     public void addExcercise(Exercise exercise) {
-        if (isNull(exercises)) exercises = new ArrayList<>();
+        if (isNull(exercises)) exercises = new HashSet<>();
         if (this.exercises.stream().noneMatch(exerc -> exerc.getName().equals(exercise.getName()))) {
             exercises.add(exercise);
         }
     }
 
-    public static Muscle with(String name, List<Muscle> musclesAssociated, List<Exercise> exercisesAssociated) {
-
+    public static Muscle with(String name, Set<Muscle> musclesAssociated, Set<Exercise> exercisesAssociated) {
         if (nonNull(musclesAssociated) && !musclesAssociated.isEmpty()) {
             var groupMuscle = new MuscleGroup(name);
             groupMuscle.associateMuscles(musclesAssociated);
@@ -57,20 +55,6 @@ public abstract class Muscle {
             exercisesAssociated.forEach(muscle::addExcercise);
             return muscle;
         }
-
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Muscle muscle = (Muscle) o;
-        return Objects.equals(name, muscle.name);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hashCode(name);
     }
 
 }
