@@ -6,6 +6,7 @@ import com.mootiv.domain.Exercise;
 import com.mootiv.domain.ExerciseType;
 import com.mootiv.domain.muscle.Muscle;
 import com.mootiv.error.exception.BusinessException;
+import com.mootiv.error.exception.NotFoundException;
 import com.mootiv.repository.EquipmentRepository;
 import com.mootiv.repository.ExerciseRepository;
 import com.mootiv.repository.ExerciseTypeRepository;
@@ -13,12 +14,13 @@ import com.mootiv.repository.MuscleRepository;
 import com.mootiv.service.contract.ExerciseCrudService;
 import com.mootiv.shared.ExerciseRequest;
 import com.mootiv.shared.ExerciseResponse;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Set;
 
-import static com.mootiv.error.ApiMootivErrors.MUSCLE_ALREADY_CREATED;
+import static com.mootiv.error.ApiMootivErrors.*;
 import static java.util.Objects.nonNull;
 
 @Service
@@ -39,7 +41,7 @@ public class ExerciseCrud implements ExerciseCrudService {
     @Override
     public List<ExerciseResponse> getExercise() {
         return exerciseRepository.findAll().stream()
-                .map(exercise -> ExerciseResponse.mapFrom(exercise))
+                .map(ExerciseResponse::mapFrom)
                 .toList();
     }
 
@@ -47,9 +49,8 @@ public class ExerciseCrud implements ExerciseCrudService {
     public ExerciseResponse createExercise(ExerciseRequest request) {
 
         Set<Muscle> muscles = null;
-        Set<ExerciseType> types = null;
+        Set<ExerciseType> exerciseTypes = null;
         Set<Equipment> equipment = null;
-
 
         var exercise = exerciseRepository.findByName(request.getName());
         if (exercise.isPresent()) {
@@ -60,13 +61,13 @@ public class ExerciseCrud implements ExerciseCrudService {
             muscles = muscleRepository.findListByIds(request.getIdMuscles());
 
         if (nonNull(request.getIdExercisesType()))
-            types = exerciseTypeRepository.findListByIds(request.getIdExercisesType());
+            exerciseTypes = exerciseTypeRepository.findListByIds(request.getIdExercisesType());
 
         if (nonNull(request.getIdEquipments()))
             equipment = equipmentRepository.findListByIds(request.getIdEquipments());
 
 
-        var ex = Exercise.with(request.getName(), request.getIsTotal(), request.getIsForTime(), muscles, types, equipment);
+        var ex = Exercise.with(request.getName(), request.getIsTotal(), request.getIsForTime(), muscles, exerciseTypes, equipment);
 
         exerciseRepository.save(ex);
 
@@ -75,17 +76,50 @@ public class ExerciseCrud implements ExerciseCrudService {
     }
 
     @Override
-    public ExerciseResponse updateExercise(Integer id, ExerciseRequest bodyRequest) {
-        return null;
+    public ExerciseResponse updateExercise(Integer id, ExerciseRequest request) {
+        Set<Muscle> muscles = null;
+        Set<ExerciseType> exerciseTypes = null;
+        Set<Equipment> equipments = null;
+
+        var exerciseToUpdate = exerciseRepository.findById(id)
+                .orElseThrow(BusinessException.of(EXERCISE_NOT_FOUND));
+
+
+        exerciseRepository.findByName(request.getName())
+                .filter(existingExercise -> !existingExercise.getId().equals(id))
+                .ifPresent(muscle -> { throw new BusinessException(EXERCISE_ALREADY_CREATED);});
+
+        if (nonNull(request.getIdMuscles()))
+            muscles = muscleRepository.findListByIds(request.getIdMuscles());
+
+        if (nonNull(request.getIdExercisesType()))
+            exerciseTypes = exerciseTypeRepository.findListByIds(request.getIdExercisesType());
+
+        if (nonNull(request.getIdEquipments()))
+            equipments = equipmentRepository.findListByIds(request.getIdEquipments());
+
+
+        exerciseToUpdate.update(request.getName(), request.getIsTotal(), request.getIsForTime(), muscles, exerciseTypes, equipments);
+
+        exerciseRepository.save(exerciseToUpdate);
+
+        return ExerciseResponse.mapFrom(exerciseToUpdate);
     }
 
     @Override
     public ExerciseResponse getExercise(Integer id) {
-        return null;
+        return exerciseRepository.findById(id)
+                .map(ExerciseResponse::mapFrom)
+                .orElseThrow(NotFoundException.of(EXERCISE_NOT_FOUND));
     }
 
     @Override
     public void deleteExercise(Integer id) {
+        try {
+            exerciseRepository.deleteById(id);
+        } catch (DataIntegrityViolationException e) {
+            throw new RuntimeException("No es posible eliminar este ejercicio ya que se encuentra asociado a otra entidad.");
+        }
     }
 
 }

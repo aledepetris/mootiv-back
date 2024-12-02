@@ -2,7 +2,8 @@ package com.mootiv.domain;
 
 import com.mootiv.domain.muscle.Muscle;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -54,6 +55,15 @@ public class Exercise {
 
     }
 
+    public void update(@NotBlank String name, @NotNull Boolean isTotal, @NotNull Boolean isForTime,
+                       Set<Muscle> muscles, Set<ExerciseType> exerciseTypes, Set<Equipment> equipments) {
+        this.name = name;
+        this.isTotal = isTotal;
+        this.isForTime = isForTime;
+        this.muscles = muscles;
+        this.exercisesType = exerciseTypes;
+        this.equipments = equipments;
+    }
 }
 
 

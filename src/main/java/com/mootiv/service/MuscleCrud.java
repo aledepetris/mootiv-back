@@ -75,7 +75,7 @@ public class MuscleCrud implements MuscleCrudService {
 
         muscleRepository.findByName(bodyRequest.getName())
                 .filter(existingMuscle -> !existingMuscle.getId().equals(id))
-                .ifPresent(muscle -> { throw new BusinessException(MUSCLE_ALREADY_CREATED); });
+                .ifPresent(muscle -> { throw new BusinessException(MUSCLE_ALREADY_CREATED);});
 
         if (nonNull(bodyRequest.getIdMuscles()))
             muscles = muscleRepository.findListByIds(bodyRequest.getIdMuscles());
