@@ -1,6 +1,9 @@
 package com.mootiv.domain;
 
 import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -10,6 +13,9 @@ import java.time.LocalDate;
 @Getter @Setter
 public class Measurement {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Integer id;
     private LocalDate startDate;
     private Float height;
     private Float weight;

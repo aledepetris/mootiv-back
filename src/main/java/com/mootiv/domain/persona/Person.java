@@ -1,8 +1,6 @@
 package com.mootiv.domain.persona;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.Inheritance;
-import jakarta.persistence.InheritanceType;
+import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -13,6 +11,10 @@ import java.time.Period;
 @Getter @Setter
 @Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
 public abstract class Person {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private Integer id;
 
     private Long dni;
 

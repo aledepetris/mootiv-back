@@ -13,6 +13,7 @@ public class Condition {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
+    @ManyToOne
     private Affection affection;
     private LocalDate diagnosisDate;
     @Enumerated(EnumType.STRING)

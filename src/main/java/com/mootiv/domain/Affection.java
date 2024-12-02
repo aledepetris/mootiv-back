@@ -1,10 +1,6 @@
 package com.mootiv.domain;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.validation.constraints.NotBlank;
+import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -19,6 +15,7 @@ public class Affection {
     private Integer id;
     private String name;
     private String description;
+    @ManyToMany
     private Set<Exercise> exercisesExcluded;
 
     public void update(String name, String description, Set<Exercise> excludedExercises) {

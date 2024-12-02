@@ -1,15 +1,15 @@
 package com.mootiv.service.contract;
 
-import com.mootiv.domain.Exercise;
 import com.mootiv.domain.Affection;
+import com.mootiv.domain.Exercise;
 import com.mootiv.error.exception.BusinessException;
 import com.mootiv.error.exception.NotFoundException;
 import com.mootiv.repository.AffectionRepository;
 import com.mootiv.repository.ExerciseRepository;
 import com.mootiv.shared.AffectionRequest;
 import com.mootiv.shared.AffectionResponse;
-import com.mootiv.shared.MuscleResponse;
 import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Set;
@@ -17,6 +17,7 @@ import java.util.Set;
 import static com.mootiv.error.ApiMootivErrors.*;
 import static java.util.Objects.nonNull;
 
+@Service
 public class AffectionCrud implements AffectionCrudService {
 
     private final AffectionRepository affectionRepository;
