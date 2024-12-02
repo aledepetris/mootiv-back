@@ -16,7 +16,9 @@ import static com.mootiv.error.ApiMootivErrors.MUSCLE_NOT_FOUND;
 public interface EquipmentRepository extends JpaRepository<Equipment, Integer> {
 
     Optional<Equipment> findByName(String name);
+
     Set<Equipment> findByIdIn(List<Integer> ids);
+
     default Set<Equipment> findListByIds(List<Integer> ids) {
         Set<Equipment> muscles = findByIdIn(ids);
         if (muscles.size() != ids.size()) throw new NotFoundException(MUSCLE_NOT_FOUND);
