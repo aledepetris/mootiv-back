@@ -1,23 +1,57 @@
 package com.mootiv.domain;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import com.mootiv.domain.muscle.Muscle;
+import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
+import java.util.Set;
 
 @Entity
+@Getter @Setter
+@NoArgsConstructor
 public class Exercise {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    @Getter
     private String name;
 
-    public Exercise(String name) {
-        this.name = name;
+    private boolean isForTime;
+
+    private boolean isTotal;
+
+    @ManyToMany(fetch = FetchType.LAZY)
+    @JoinTable(
+            name = "exercise_muscle",
+            joinColumns = @JoinColumn(name = "exercise_id"),
+            inverseJoinColumns = @JoinColumn(name = "muscle_id")
+    )
+    Set<Muscle> muscles;
+
+    @ManyToMany(fetch = FetchType.LAZY)
+    Set<ExerciseType> exercisesType;
+
+    @ManyToMany(fetch = FetchType.LAZY)
+    Set<Equipment> equipments;
+
+
+    public static Exercise with(String name, boolean isForTime, boolean isTotal,
+                                Set<Muscle> muscles, Set<ExerciseType> exercisesType, Set<Equipment> equipments) {
+
+        Exercise exercise = new Exercise();
+        exercise.setName(name);
+        exercise.setExercisesType(exercisesType);
+        exercise.setMuscles(muscles);
+        exercise.setEquipments(equipments);
+        exercise.setForTime(isForTime);
+        exercise.setTotal(isTotal);
+
+        return exercise;
+
     }
 
 }

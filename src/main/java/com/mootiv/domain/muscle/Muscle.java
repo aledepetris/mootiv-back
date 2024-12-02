@@ -25,7 +25,7 @@ public abstract class Muscle {
     @Getter
     protected String name;
 
-    @ManyToMany(fetch = FetchType.LAZY)
+    @ManyToMany(mappedBy = "muscles", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     protected Set<Exercise> exercises;
 
 
@@ -41,6 +41,7 @@ public abstract class Muscle {
         if (isNull(exercises)) exercises = new HashSet<>();
         if (this.exercises.stream().noneMatch(exerc -> exerc.getName().equals(exercise.getName()))) {
             exercises.add(exercise);
+            exercise.getMuscles().add(this);
         }
     }
 

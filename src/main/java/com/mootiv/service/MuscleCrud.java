@@ -4,7 +4,7 @@ import com.mootiv.domain.Exercise;
 import com.mootiv.domain.muscle.Muscle;
 import com.mootiv.error.exception.BusinessException;
 import com.mootiv.error.exception.NotFoundException;
-import com.mootiv.repository.ExersiceRepository;
+import com.mootiv.repository.ExerciseRepository;
 import com.mootiv.repository.MuscleRepository;
 import com.mootiv.service.contract.MuscleCrudService;
 import com.mootiv.shared.MuscleRequest;
@@ -25,11 +25,11 @@ import static java.util.Objects.nonNull;
 public class MuscleCrud implements MuscleCrudService {
 
     private final MuscleRepository muscleRepository;
-    private final ExersiceRepository exersiceRepository;
+    private final ExerciseRepository exerciseRepository;
 
-    public MuscleCrud(MuscleRepository muscleRepository, ExersiceRepository exersiceRepository) {
+    public MuscleCrud(MuscleRepository muscleRepository, ExerciseRepository exerciseRepository) {
         this.muscleRepository = muscleRepository;
-        this.exersiceRepository = exersiceRepository;
+        this.exerciseRepository = exerciseRepository;
     }
 
     @Override
@@ -54,7 +54,7 @@ public class MuscleCrud implements MuscleCrudService {
             muscles = muscleRepository.findListByIds(bodyRequest.getIdMuscles());
 
         if (nonNull(bodyRequest.getIdExcersices()))
-            exercises = exersiceRepository.findListByIds(bodyRequest.getIdExcersices());
+            exercises = exerciseRepository.findListByIds(bodyRequest.getIdExcersices());
 
         var muscleSaved = muscleRepository.save(Muscle.with(bodyRequest.getName(), muscles, exercises));
 
@@ -81,7 +81,7 @@ public class MuscleCrud implements MuscleCrudService {
             muscles = muscleRepository.findListByIds(bodyRequest.getIdMuscles());
 
         if (nonNull(bodyRequest.getIdExcersices()))
-            exercises = exersiceRepository.findListByIds(bodyRequest.getIdExcersices());
+            exercises = exerciseRepository.findListByIds(bodyRequest.getIdExcersices());
 
         muscleToUpdate.update(bodyRequest.getName(), muscles, exercises);
 
