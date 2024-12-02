@@ -1,11 +1,13 @@
 package com.mootiv.domain.muscle;
 
 import com.mootiv.domain.Exercise;
-import jakarta.persistence.*;
+import jakarta.persistence.CascadeType;
+import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
+import jakarta.persistence.ManyToMany;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
-import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 

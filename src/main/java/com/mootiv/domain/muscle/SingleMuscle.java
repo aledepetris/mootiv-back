@@ -4,7 +4,6 @@ import com.mootiv.domain.Exercise;
 import jakarta.persistence.Entity;
 import lombok.NoArgsConstructor;
 
-import java.util.List;
 import java.util.Set;
 
 import static java.util.Objects.nonNull;

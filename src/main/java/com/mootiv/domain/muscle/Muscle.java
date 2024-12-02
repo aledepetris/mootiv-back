@@ -4,6 +4,7 @@ import com.mootiv.domain.Exercise;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -13,16 +14,15 @@ import static java.util.Objects.nonNull;
 
 
 @Entity
-@Inheritance(strategy = InheritanceType.SINGLE_TABLE)
+@Getter @Setter
 @NoArgsConstructor
+@Inheritance(strategy = InheritanceType.SINGLE_TABLE)
 public abstract class Muscle {
 
     @Id
-    @Getter
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    @Getter
     protected String name;
 
     @ManyToMany(mappedBy = "muscles", cascade = CascadeType.ALL, fetch = FetchType.LAZY)

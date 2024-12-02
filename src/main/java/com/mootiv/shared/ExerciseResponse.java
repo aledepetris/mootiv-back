@@ -10,13 +10,11 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
 
-import java.util.Collections;
 import java.util.List;
 import java.util.Set;
 
 import static java.util.Collections.emptyList;
 import static java.util.Collections.emptySet;
-import static java.util.Objects.isNull;
 import static java.util.Objects.nonNull;
 
 @Builder

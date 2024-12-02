@@ -3,7 +3,6 @@ package com.mootiv.repository;
 import com.mootiv.domain.muscle.Muscle;
 import com.mootiv.error.exception.NotFoundException;
 import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
