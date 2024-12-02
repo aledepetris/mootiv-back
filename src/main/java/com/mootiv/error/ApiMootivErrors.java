@@ -24,7 +24,8 @@ public class ApiMootivErrors {
     public static final ApiError TRAINING_TYPE_NOT_FOUND = new ApiError("TrainingTypeNotFound", "Training Type not found");
     public static final ApiError TRAINING_TYPE_ALREADY_CREATED = new ApiError("TrainingTypeAlreadyCreated", "Training Type already created");
 
-
+    public static final ApiError AFFECTION_NOT_FOUND = new ApiError("AffectionNotFound", "Affection not found");
+    public static final ApiError AFFECTION_ALREADY_CREATED = new ApiError("AffectionAlreadyCreated", "Affection already created");
 
     public static final String REQUIRED_FIELD = "El campo {0} es requerido y no fue informado";
     public static final String CAMPO_CON_VALOR_INVALIDO_CUSTOM = "Error en el campo {0}: {1}";
