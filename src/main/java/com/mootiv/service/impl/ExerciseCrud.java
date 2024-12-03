@@ -57,14 +57,14 @@ public class ExerciseCrud implements ExerciseCrudService {
             throw new BusinessException(MUSCLE_ALREADY_CREATED);
         }
 
-        if (nonNull(request.getIdMuscles()))
-            muscles = muscleRepository.findListByIds(request.getIdMuscles());
+        if (nonNull(request.getIdsMuscles()))
+            muscles = muscleRepository.findListByIds(request.getIdsMuscles());
 
-        if (nonNull(request.getIdExercisesType()))
-            exerciseTypes = exerciseTypeRepository.findListByIds(request.getIdExercisesType());
+        if (nonNull(request.getIdsExercisesType()))
+            exerciseTypes = exerciseTypeRepository.findListByIds(request.getIdsExercisesType());
 
-        if (nonNull(request.getIdEquipments()))
-            equipment = equipmentRepository.findListByIds(request.getIdEquipments());
+        if (nonNull(request.getIdsEquipments()))
+            equipment = equipmentRepository.findListByIds(request.getIdsEquipments());
 
 
         var ex = Exercise.with(request.getName(), request.getIsTotal(), request.getIsForTime(), muscles, exerciseTypes, equipment);
@@ -89,14 +89,14 @@ public class ExerciseCrud implements ExerciseCrudService {
                 .filter(existingExercise -> !existingExercise.getId().equals(id))
                 .ifPresent(exercise -> { throw new BusinessException(EXERCISE_ALREADY_CREATED);});
 
-        if (nonNull(request.getIdMuscles()))
-            muscles = muscleRepository.findListByIds(request.getIdMuscles());
+        if (nonNull(request.getIdsMuscles()))
+            muscles = muscleRepository.findListByIds(request.getIdsMuscles());
 
-        if (nonNull(request.getIdExercisesType()))
-            exerciseTypes = exerciseTypeRepository.findListByIds(request.getIdExercisesType());
+        if (nonNull(request.getIdsExercisesType()))
+            exerciseTypes = exerciseTypeRepository.findListByIds(request.getIdsExercisesType());
 
-        if (nonNull(request.getIdEquipments()))
-            equipments = equipmentRepository.findListByIds(request.getIdEquipments());
+        if (nonNull(request.getIdsEquipments()))
+            equipments = equipmentRepository.findListByIds(request.getIdsEquipments());
 
 
         exerciseToUpdate.update(request.getName(), request.getIsTotal(), request.getIsForTime(), muscles, exerciseTypes, equipments);

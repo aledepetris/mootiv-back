@@ -12,8 +12,8 @@ public class MuscleRequest {
     @NotBlank
     private String name;
 
-    private List<Integer> idExcersices;
+    private List<Integer> idsExercises;
 
-    private List<Integer> idMuscles;
+    private List<Integer> idsMuscles;
 
 }

@@ -50,11 +50,11 @@ public class MuscleCrud implements MuscleCrudService {
             throw new BusinessException(MUSCLE_ALREADY_CREATED);
         }
 
-        if (nonNull(bodyRequest.getIdMuscles()))
-            muscles = muscleRepository.findListByIds(bodyRequest.getIdMuscles());
+        if (nonNull(bodyRequest.getIdsMuscles()))
+            muscles = muscleRepository.findListByIds(bodyRequest.getIdsMuscles());
 
-        if (nonNull(bodyRequest.getIdExcersices()))
-            exercises = exerciseRepository.findListByIds(bodyRequest.getIdExcersices());
+        if (nonNull(bodyRequest.getIdsExercises()))
+            exercises = exerciseRepository.findListByIds(bodyRequest.getIdsExercises());
 
         var muscleSaved = muscleRepository.save(Muscle.with(bodyRequest.getName(), muscles, exercises));
 
@@ -67,7 +67,7 @@ public class MuscleCrud implements MuscleCrudService {
         Set<Exercise> exercises = null;
         Set<Muscle> muscles = null;
 
-        if (bodyRequest.getIdMuscles().contains(id))
+        if (bodyRequest.getIdsMuscles().contains(id))
             throw new RuntimeException("No es posible asociar el musculo a si mismo.");
 
         var muscleToUpdate = muscleRepository.findById(id)
@@ -77,11 +77,11 @@ public class MuscleCrud implements MuscleCrudService {
                 .filter(existingMuscle -> !existingMuscle.getId().equals(id))
                 .ifPresent(muscle -> { throw new BusinessException(MUSCLE_ALREADY_CREATED);});
 
-        if (nonNull(bodyRequest.getIdMuscles()))
-            muscles = muscleRepository.findListByIds(bodyRequest.getIdMuscles());
+        if (nonNull(bodyRequest.getIdsMuscles()))
+            muscles = muscleRepository.findListByIds(bodyRequest.getIdsMuscles());
 
-        if (nonNull(bodyRequest.getIdExcersices()))
-            exercises = exerciseRepository.findListByIds(bodyRequest.getIdExcersices());
+        if (nonNull(bodyRequest.getIdsExercises()))
+            exercises = exerciseRepository.findListByIds(bodyRequest.getIdsExercises());
 
         muscleToUpdate.update(bodyRequest.getName(), muscles, exercises);
 

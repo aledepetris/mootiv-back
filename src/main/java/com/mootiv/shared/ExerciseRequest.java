@@ -19,10 +19,10 @@ public class ExerciseRequest {
     @NotNull
     private Boolean isTotal;
 
-    private List<Integer> idMuscles;
+    private List<Integer> idsMuscles;
 
-    private List<Integer> idExercisesType;
+    private List<Integer> idsExercisesType;
 
-    private List<Integer> idEquipments;
+    private List<Integer> idsEquipments;
 
 }
