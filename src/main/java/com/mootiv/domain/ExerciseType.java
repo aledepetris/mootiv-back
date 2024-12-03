@@ -5,10 +5,12 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Entity
 @Getter @Setter
+@NoArgsConstructor
 public class ExerciseType {
 
     @Id
@@ -17,4 +19,7 @@ public class ExerciseType {
 
     private String name;
 
+    public ExerciseType(String name) {
+        this.name = name;
+    }
 }

@@ -1,4 +1,4 @@
-package com.mootiv.service.contract;
+package com.mootiv.service;
 
 import com.mootiv.shared.MuscleRequest;
 import com.mootiv.shared.MuscleResponse;

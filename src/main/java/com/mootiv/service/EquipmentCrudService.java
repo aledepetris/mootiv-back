@@ -1,4 +1,4 @@
-package com.mootiv.service.contract;
+package com.mootiv.service;
 
 import com.mootiv.shared.EquipmentRequest;
 import com.mootiv.shared.EquipmentResponse;

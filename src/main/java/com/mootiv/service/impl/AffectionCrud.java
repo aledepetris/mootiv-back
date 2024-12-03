@@ -1,4 +1,4 @@
-package com.mootiv.service.contract;
+package com.mootiv.service.impl;
 
 import com.mootiv.domain.Affection;
 import com.mootiv.domain.Exercise;
@@ -6,6 +6,7 @@ import com.mootiv.error.exception.BusinessException;
 import com.mootiv.error.exception.NotFoundException;
 import com.mootiv.repository.AffectionRepository;
 import com.mootiv.repository.ExerciseRepository;
+import com.mootiv.service.AffectionCrudService;
 import com.mootiv.shared.AffectionRequest;
 import com.mootiv.shared.AffectionResponse;
 import org.springframework.dao.DataIntegrityViolationException;

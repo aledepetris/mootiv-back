@@ -1,6 +1,6 @@
 package com.mootiv.controller;
 
-import com.mootiv.service.contract.AffectionCrudService;
+import com.mootiv.service.AffectionCrudService;
 import com.mootiv.shared.AffectionRequest;
 import com.mootiv.shared.AffectionResponse;
 import jakarta.validation.Valid;

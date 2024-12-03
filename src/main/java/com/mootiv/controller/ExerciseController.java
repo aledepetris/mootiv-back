@@ -1,6 +1,6 @@
 package com.mootiv.controller;
 
-import com.mootiv.service.contract.ExerciseCrudService;
+import com.mootiv.service.ExerciseCrudService;
 import com.mootiv.shared.ExerciseRequest;
 import com.mootiv.shared.ExerciseResponse;
 import jakarta.validation.Valid;

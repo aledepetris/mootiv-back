@@ -1,4 +1,4 @@
-package com.mootiv.service;
+package com.mootiv.service.impl;
 
 import com.mootiv.domain.Exercise;
 import com.mootiv.domain.muscle.Muscle;
@@ -6,7 +6,7 @@ import com.mootiv.error.exception.BusinessException;
 import com.mootiv.error.exception.NotFoundException;
 import com.mootiv.repository.ExerciseRepository;
 import com.mootiv.repository.MuscleRepository;
-import com.mootiv.service.contract.MuscleCrudService;
+import com.mootiv.service.MuscleCrudService;
 import com.mootiv.shared.MuscleRequest;
 import com.mootiv.shared.MuscleResponse;
 import lombok.extern.log4j.Log4j2;

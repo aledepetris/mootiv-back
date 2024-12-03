@@ -1,4 +1,4 @@
-package com.mootiv.service;
+package com.mootiv.service.impl;
 
 
 import com.mootiv.domain.Equipment;
@@ -11,7 +11,7 @@ import com.mootiv.repository.EquipmentRepository;
 import com.mootiv.repository.ExerciseRepository;
 import com.mootiv.repository.ExerciseTypeRepository;
 import com.mootiv.repository.MuscleRepository;
-import com.mootiv.service.contract.ExerciseCrudService;
+import com.mootiv.service.ExerciseCrudService;
 import com.mootiv.shared.ExerciseRequest;
 import com.mootiv.shared.ExerciseResponse;
 import org.springframework.dao.DataIntegrityViolationException;
@@ -87,7 +87,7 @@ public class ExerciseCrud implements ExerciseCrudService {
 
         exerciseRepository.findByName(request.getName())
                 .filter(existingExercise -> !existingExercise.getId().equals(id))
-                .ifPresent(muscle -> { throw new BusinessException(EXERCISE_ALREADY_CREATED);});
+                .ifPresent(exercise -> { throw new BusinessException(EXERCISE_ALREADY_CREATED);});
 
         if (nonNull(request.getIdMuscles()))
             muscles = muscleRepository.findListByIds(request.getIdMuscles());

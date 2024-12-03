@@ -1,10 +1,10 @@
-package com.mootiv.service;
+package com.mootiv.service.impl;
 
 import com.mootiv.domain.Equipment;
 import com.mootiv.error.exception.BusinessException;
 import com.mootiv.error.exception.NotFoundException;
 import com.mootiv.repository.EquipmentRepository;
-import com.mootiv.service.contract.EquipmentCrudService;
+import com.mootiv.service.EquipmentCrudService;
 import com.mootiv.shared.EquipmentRequest;
 import com.mootiv.shared.EquipmentResponse;
 import org.springframework.dao.DataIntegrityViolationException;
@@ -51,12 +51,12 @@ public class EquipmentCrud implements EquipmentCrudService {
 
         equipmentRepository.findByName(request.getName())
                 .filter(existingEquipment -> !existingEquipment.getId().equals(id))
-                .ifPresent(muscle -> { throw new BusinessException(EQUIPMENT_ALREADY_CREATED);});
+                .ifPresent(equipment -> { throw new BusinessException(EQUIPMENT_ALREADY_CREATED);});
 
         equipmentToUpdate.setName(request.getName());
-        var muscleSaved = equipmentRepository.save(equipmentToUpdate);
+        var equipmentSaved = equipmentRepository.save(equipmentToUpdate);
 
-        return EquipmentResponse.mapFrom(muscleSaved);
+        return EquipmentResponse.mapFrom(equipmentSaved);
 
     }
 

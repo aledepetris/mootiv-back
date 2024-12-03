@@ -1,6 +1,6 @@
 package com.mootiv.domain.cycle;
 
-import com.mootiv.domain.Goal;
+import com.mootiv.domain.goal.Goal;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;

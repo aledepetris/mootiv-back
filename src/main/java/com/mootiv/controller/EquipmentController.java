@@ -1,6 +1,6 @@
 package com.mootiv.controller;
 
-import com.mootiv.service.contract.EquipmentCrudService;
+import com.mootiv.service.EquipmentCrudService;
 import com.mootiv.shared.EquipmentRequest;
 import com.mootiv.shared.EquipmentResponse;
 import jakarta.validation.Valid;

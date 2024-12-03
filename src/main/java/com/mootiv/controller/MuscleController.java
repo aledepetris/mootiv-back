@@ -1,6 +1,6 @@
 package com.mootiv.controller;
 
-import com.mootiv.service.contract.MuscleCrudService;
+import com.mootiv.service.MuscleCrudService;
 import com.mootiv.shared.MuscleRequest;
 import com.mootiv.shared.MuscleResponse;
 import jakarta.validation.constraints.NotNull;
