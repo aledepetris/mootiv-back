@@ -15,7 +15,7 @@ public class GoalResponse {
     private String description;
     private List<String> exercisesExcluded;
 
-    // TODO
+    // TODO take when is finished TrainingType CRUD
     public static GoalResponse mapFrom(Goal goal) {
         return GoalResponse.builder()
                 .id(goal.getId())

@@ -30,11 +30,13 @@ public class GoalCrud implements GoalCrudService {
 
     @Override
     public GoalResponse createGoal(GoalRequest request) {
+        // TODO take when is finished TrainingType CRUD
         return null;
     }
 
     @Override
     public GoalResponse updateGoal(Integer id, GoalRequest request) {
+        // TODO take when is finished TrainingType CRUD
         return null;
     }
 
