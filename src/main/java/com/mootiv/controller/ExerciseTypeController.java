@@ -31,7 +31,7 @@ public class ExerciseTypeController {
     @PostMapping
     public ResponseEntity<ExerciseTypeResponse> addExerciseType(@RequestBody @Valid ExerciseTypeRequest requestBody) {
         return ResponseEntity
-                .created(URI.create("/bff/v1/exerciseType"))
+                .created(URI.create("/bff/v1/exercise-type"))
                 .body(exerciseTypeCrudService.createExerciseType(requestBody));
     }
 

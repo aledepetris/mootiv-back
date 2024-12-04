@@ -29,7 +29,7 @@ public class TrainingTypeController {
     @PostMapping
     public ResponseEntity<TrainingTypeResponse> addTrainingType(@RequestBody @Valid TrainingTypeRequest requestBody) {
         return ResponseEntity
-                .created(URI.create("/bff/v1/trainingType"))
+                .created(URI.create("/bff/v1/training-type"))
                 .body(trainingTypeCrudService.createTrainingType(requestBody));
     }
 
