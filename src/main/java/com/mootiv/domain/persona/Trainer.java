@@ -1,19 +1,34 @@
 package com.mootiv.domain.persona;
 
 import com.mootiv.shared.TrainerRequest;
-import jakarta.persistence.Entity;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.OneToMany;
+import jakarta.persistence.*;
 import lombok.*;
 import org.aspectj.apache.bcel.generic.RET;
 
 import java.time.LocalDate;
+import java.time.Period;
 import java.util.Set;
 
 @Entity
 @Getter @Setter
 @NoArgsConstructor
 public class Trainer extends Person {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    protected Integer id;
+
+    protected Long dni;
+
+    protected String name;
+
+    protected String lastName;
+
+    protected String email;
+
+    protected String telephone;
+
+    protected LocalDate birthdate;
 
     @OneToMany
     @JoinColumn(name = "trainer_id")
@@ -43,5 +58,13 @@ public class Trainer extends Person {
         this.birthdate = request.getBirthdate();
         this.active = request.getActive();
         this.students = students;
+    }
+
+    @Override
+    public Integer getAge() {
+        if (birthdate == null) {
+            throw new IllegalStateException("Birthdate is not set");
+        }
+        return Period.between(birthdate, LocalDate.now()).getYears();
     }
 }

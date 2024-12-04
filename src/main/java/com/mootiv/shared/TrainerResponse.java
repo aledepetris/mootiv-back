@@ -5,8 +5,9 @@ import lombok.*;
 
 import java.time.LocalDate;
 import java.util.List;
-import java.util.Set;
-import java.util.stream.Collectors;
+
+import static java.util.Collections.emptyList;
+import static java.util.Objects.nonNull;
 
 @Builder
 @Getter @Setter
@@ -39,9 +40,12 @@ public class TrainerResponse {
                 .lastName(trainer.getLastName())
                 .email(trainer.getEmail())
                 .telephone(trainer.getTelephone())
-                .students(trainer.getStudents().stream()
-                        .map(student -> student.getLastName() + ", " + student.getName())
-                        .toList())
+                .birthdate(trainer.getBirthdate())
+                .students(nonNull(trainer.getStudents())
+                        ? trainer.getStudents().stream()
+                                    .map(student -> student.getLastName() + ", " + student.getName())
+                                    .toList()
+                        : emptyList())
                 .active(trainer.isActive())
                 .build();
     }
