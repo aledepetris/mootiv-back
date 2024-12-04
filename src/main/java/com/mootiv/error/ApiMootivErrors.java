@@ -30,6 +30,12 @@ public class ApiMootivErrors {
     public static final ApiError GOAL_NOT_FOUND = new ApiError("GoalNotFound", "Goal not found");
     public static final ApiError GOAL_ALREADY_CREATED = new ApiError("GoalAlreadyCreated", "Goal already created");
 
+    public static final ApiError TRAINER_NOT_FOUND = new ApiError("TrainerNotFound", "Trainer not found");
+    public static final ApiError TRAINER_ALREADY_CREATED = new ApiError("TrainerAlreadyCreated", "Trainer already created");
+
+    public static final ApiError STUDENT_NOT_FOUND = new ApiError("StudentNotFound", "Student not found");
+    public static final ApiError STUDENT_ALREADY_CREATED = new ApiError("StudentAlreadyCreated", "Student already created");
+
 
     public static final String REQUIRED_FIELD = "El campo {0} es requerido y no fue informado";
     public static final String CAMPO_CON_VALOR_INVALIDO_CUSTOM = "Error en el campo {0}: {1}";

@@ -1,7 +1,9 @@
 package com.mootiv.domain.persona;
 
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.time.LocalDate;
@@ -10,23 +12,24 @@ import java.time.Period;
 @Entity
 @Getter @Setter
 @Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
+@NoArgsConstructor @AllArgsConstructor
 public abstract class Person {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private Integer id;
+    protected Integer id;
 
-    private Long dni;
+    protected Long dni;
 
-    private String name;
+    protected String name;
 
-    private String lastName;
+    protected String lastName;
 
-    private String email;
+    protected String email;
 
-    private String telephone;
+    protected String telephone;
 
-    private LocalDate birthdate;
+    protected LocalDate birthdate;
 
     public Integer getAge() {
         if (birthdate == null) {
