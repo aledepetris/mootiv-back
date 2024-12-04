@@ -10,7 +10,7 @@ INSERT INTO student (id, dni, email, last_name, name, telephone, birthdate, star
     (3, 40345678, 'alumno.tres@example.com', 'Martínez', 'Lucía', '+5491124455566', '2001-12-25', '2023-03-10', 2, false);
 
 -- Ajustar la secuencia de trainer_id al siguiente valor disponible
-ALTER SEQUENCE trainer_seq RESTART WITH 3;
+ALTER SEQUENCE trainer_id_seq RESTART WITH 3;
 
 -- Ajustar la secuencia de student_id al siguiente valor disponible
-ALTER SEQUENCE student_seq RESTART WITH 4;
+ALTER SEQUENCE student_id_seq RESTART WITH 4;

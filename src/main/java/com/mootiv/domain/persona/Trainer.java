@@ -15,7 +15,7 @@ import java.util.Set;
 public class Trainer extends Person {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     protected Integer id;
 
     protected Long dni;

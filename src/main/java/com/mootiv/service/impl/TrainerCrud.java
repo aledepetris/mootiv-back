@@ -30,8 +30,7 @@ public class TrainerCrud implements TrainerCrudService {
 
     @Override
     public List<TrainerResponse> getTrainers() {
-        var trainers = trainerRepository.findAll();
-        return trainers.stream()
+        return trainerRepository.findAll().stream()
                 .map(TrainerResponse::mapFrom)
                 .toList();
     }
