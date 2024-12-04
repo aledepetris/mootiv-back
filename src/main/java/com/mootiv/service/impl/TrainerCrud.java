@@ -79,7 +79,7 @@ public class TrainerCrud implements TrainerCrudService {
     public TrainerResponse getTrainer(Integer id) {
         return trainerRepository.findById(id)
                 .map(TrainerResponse::mapFrom)
-                .orElseThrow(NotFoundException.of(AFFECTION_NOT_FOUND));
+                .orElseThrow(NotFoundException.of(TRAINER_NOT_FOUND));
     }
 
 }

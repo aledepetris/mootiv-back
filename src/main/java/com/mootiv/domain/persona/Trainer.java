@@ -30,7 +30,7 @@ public class Trainer extends Person {
 
     protected LocalDate birthdate;
 
-    @OneToMany
+    @OneToMany(fetch = FetchType.LAZY)
     @JoinColumn(name = "trainer_id")
     private Set<Student> students;
 
@@ -58,6 +58,10 @@ public class Trainer extends Person {
         this.birthdate = request.getBirthdate();
         this.active = request.getActive();
         this.students = students;
+    }
+
+    public void addStudent(Student student) {
+        this.students.add(student);
     }
 
     @Override

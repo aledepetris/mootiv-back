@@ -2,6 +2,7 @@ package com.mootiv.repository;
 
 import com.mootiv.domain.persona.Student;
 import com.mootiv.error.exception.NotFoundException;
+import jakarta.validation.constraints.NotNull;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
@@ -23,5 +24,7 @@ public interface StudentRepository extends JpaRepository<Student, Integer> {
         if (student.size() != ids.size()) throw new NotFoundException(STUDENT_NOT_FOUND);
         return student;
     }
+
+    Optional<Student> findByDni(@NotNull Long dni);
 
 }
