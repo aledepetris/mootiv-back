@@ -1,5 +1,6 @@
 package com.mootiv.shared;
 
+import com.mootiv.domain.TrainingType;
 import com.mootiv.domain.goal.Goal;
 import lombok.*;
 
@@ -13,14 +14,22 @@ public class GoalResponse {
     private Integer id;
     private String name;
     private String description;
-    private List<String> exercisesExcluded;
+    private List<ScheduleGoalResponse> scheduleGoals;
 
-    // TODO take when is finished TrainingType CRUD
     public static GoalResponse mapFrom(Goal goal) {
         return GoalResponse.builder()
                 .id(goal.getId())
                 .name(goal.getName())
-                .build();
+                .description(goal.getDescription())
+                .scheduleGoals(
+                        goal.getScheduleGoals().stream()
+                                .map(scheduleGoal -> ScheduleGoalResponse.builder()
+                                        .day(scheduleGoal.getDayOfTraining())
+                                        .trainingTypes(scheduleGoal.getTrainingTypes().stream()
+                                                .map(TrainingType::getName).toList())
+                                        .build())
+                                .toList()
+                ).build();
     }
 
 }

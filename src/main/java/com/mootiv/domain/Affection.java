@@ -1,5 +1,6 @@
 package com.mootiv.domain;
 
+import com.mootiv.domain.muscle.Muscle;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -16,19 +17,19 @@ public class Affection {
     private String name;
     private String description;
     @ManyToMany
-    private Set<Exercise> exercisesExcluded;
+    private Set<Muscle> musclesAffected;
 
-    public void update(String name, String description, Set<Exercise> excludedExercises) {
+    public void update(String name, String description, Set<Muscle> musclesAffected) {
         this.name = name;
         this.description = description;
-        this.exercisesExcluded = excludedExercises;
+        this.musclesAffected = musclesAffected;
     }
 
-    public static Affection with(String name, String description, Set<Exercise> exercisesExcluded) {
+    public static Affection with(String name, String description, Set<Muscle> musclesAffected) {
         var affection = new Affection();
         affection.setName(name);
         affection.setDescription(description);
-        affection.setExercisesExcluded(exercisesExcluded);
+        affection.setMusclesAffected(musclesAffected);
         return affection;
     }
 

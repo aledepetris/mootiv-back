@@ -1,11 +1,11 @@
 package com.mootiv.service.impl;
 
 import com.mootiv.domain.Affection;
-import com.mootiv.domain.Exercise;
+import com.mootiv.domain.muscle.Muscle;
 import com.mootiv.error.exception.BusinessException;
 import com.mootiv.error.exception.NotFoundException;
 import com.mootiv.repository.AffectionRepository;
-import com.mootiv.repository.ExerciseRepository;
+import com.mootiv.repository.MuscleRepository;
 import com.mootiv.service.AffectionCrudService;
 import com.mootiv.shared.AffectionRequest;
 import com.mootiv.shared.AffectionResponse;
@@ -22,11 +22,11 @@ import static java.util.Objects.nonNull;
 public class AffectionCrud implements AffectionCrudService {
 
     private final AffectionRepository affectionRepository;
-    private final ExerciseRepository exerciseRepository;
+    private final MuscleRepository muscleRepository;
 
-    public AffectionCrud(AffectionRepository affectionRepository, ExerciseRepository exerciseRepository) {
+    public AffectionCrud(AffectionRepository affectionRepository, MuscleRepository muscleRepository) {
         this.affectionRepository = affectionRepository;
-        this.exerciseRepository = exerciseRepository;
+        this.muscleRepository = muscleRepository;
     }
 
     @Override
@@ -38,7 +38,7 @@ public class AffectionCrud implements AffectionCrudService {
 
     @Override
     public AffectionResponse createAffection(AffectionRequest request) {
-        Set<Exercise> excludedExercises = null;
+        Set<Muscle> musclesAffected = null;
 
         var affection = affectionRepository.findByName(request.getName());
         if (affection.isPresent()) {
@@ -46,9 +46,9 @@ public class AffectionCrud implements AffectionCrudService {
         }
 
         if (nonNull(request.getIdsExcludedExercises()))
-            excludedExercises = exerciseRepository.findListByIds(request.getIdsExcludedExercises());
+            musclesAffected = muscleRepository.findListByIds(request.getIdsExcludedExercises());
 
-        var affectionSaved = affectionRepository.save(Affection.with(request.getName(), request.getDescription(), excludedExercises));
+        var affectionSaved = affectionRepository.save(Affection.with(request.getName(), request.getDescription(), musclesAffected));
 
         return AffectionResponse.mapFrom(affectionSaved);
 
@@ -56,7 +56,7 @@ public class AffectionCrud implements AffectionCrudService {
 
     @Override
     public AffectionResponse updateAffection(Integer id, AffectionRequest request) {
-        Set<Exercise> excludedExercises = null;
+        Set<Muscle> musclesAffected = null;
 
         var affectionToUpdate = affectionRepository.findById(id)
                 .orElseThrow(BusinessException.of(AFFECTION_NOT_FOUND));
@@ -67,9 +67,9 @@ public class AffectionCrud implements AffectionCrudService {
 
 
         if (nonNull(request.getIdsExcludedExercises()))
-            excludedExercises = exerciseRepository.findListByIds(request.getIdsExcludedExercises());
+            musclesAffected = muscleRepository.findListByIds(request.getIdsExcludedExercises());
 
-        affectionToUpdate.update(request.getName(), request.getDescription(), excludedExercises);
+        affectionToUpdate.update(request.getName(), request.getDescription(), musclesAffected);
 
         var affectionSaved = affectionRepository.save(affectionToUpdate);
 

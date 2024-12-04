@@ -2,6 +2,7 @@ package com.mootiv.shared;
 
 import com.mootiv.domain.Affection;
 import com.mootiv.domain.Exercise;
+import com.mootiv.domain.muscle.Muscle;
 import lombok.*;
 
 import java.util.List;
@@ -14,15 +15,15 @@ public class AffectionResponse {
     private Integer id;
     private String name;
     private String description;
-    private List<String> exercisesExcluded;
+    private List<String> musclesAffected;
 
     public static AffectionResponse mapFrom(Affection affection) {
         return AffectionResponse.builder()
                 .id(affection.getId())
                 .name(affection.getName())
                 .description(affection.getDescription())
-                .exercisesExcluded(affection.getExercisesExcluded().stream()
-                        .map(Exercise::getName)
+                .musclesAffected(affection.getMusclesAffected().stream()
+                        .map(Muscle::getName)
                         .toList()
                 )
                 .build();

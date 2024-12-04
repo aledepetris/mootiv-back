@@ -2,6 +2,7 @@ package com.mootiv.domain.goal;
 
 import com.mootiv.domain.TrainingType;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotBlank;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -17,10 +18,10 @@ public class Goal {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
     private String name;
-    private String descripcion;
+    private String description;
     @OneToMany(cascade = CascadeType.ALL)
     @JoinColumn(name = "goal_id")
-    private List<ScheduleGoal> scheduleGoals;
+    private Set<ScheduleGoal> scheduleGoals;
 
     public Set<TrainingType> getTrainingTypesByDaysOfTraining(Integer days) {
         return scheduleGoals.stream()
@@ -35,4 +36,17 @@ public class Goal {
                 .toList();
     }
 
+    public static Goal with(String name, String description, Set<ScheduleGoal> scheduleGoals) {
+        var goal = new Goal();
+        goal.setName(name);
+        goal.setDescription(description);
+        goal.setScheduleGoals(scheduleGoals);
+        return goal;
+    }
+
+    public void update(String name, String description, Set<ScheduleGoal> scheduleGoals) {
+        this.name = name;
+        this.description = description;
+        this.scheduleGoals = scheduleGoals;
+    }
 }

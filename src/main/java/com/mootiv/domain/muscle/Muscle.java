@@ -28,7 +28,6 @@ public abstract class Muscle {
     @ManyToMany(mappedBy = "muscles", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     protected Set<Exercise> exercises;
 
-
     public abstract Set<Exercise> getAssociatedExcercise();
     public abstract boolean isAMuscleGroup();
     public abstract void update(String name, Set<Muscle> muscles, Set<Exercise> exercises);
@@ -49,11 +48,13 @@ public abstract class Muscle {
         if (nonNull(musclesAssociated) && !musclesAssociated.isEmpty()) {
             var groupMuscle = new MuscleGroup(name);
             groupMuscle.associateMuscles(musclesAssociated);
-            exercisesAssociated.forEach(groupMuscle::addExcercise);
+            if (nonNull(exercisesAssociated) && !exercisesAssociated.isEmpty())
+                exercisesAssociated.forEach(groupMuscle::addExcercise);
             return groupMuscle;
         } else {
             var muscle = new SingleMuscle(name);
-            exercisesAssociated.forEach(muscle::addExcercise);
+            if (nonNull(exercisesAssociated) && !exercisesAssociated.isEmpty())
+                exercisesAssociated.forEach(muscle::addExcercise);
             return muscle;
         }
     }

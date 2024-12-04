@@ -1,7 +1,5 @@
 package com.mootiv.shared;
 
-import com.mootiv.domain.Affection;
-import com.mootiv.domain.Exercise;
 import com.mootiv.domain.ExerciseType;
 import com.mootiv.domain.TrainingType;
 import lombok.*;

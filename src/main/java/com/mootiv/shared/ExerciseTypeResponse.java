@@ -16,8 +16,8 @@ public class ExerciseTypeResponse {
 
     private String name;
 
-    public static ExerciseTypeResponse mapFrom(ExerciseType equipment) {
-        return new ExerciseTypeResponse(equipment.getId(), equipment.getName());
+    public static ExerciseTypeResponse mapFrom(ExerciseType exerciseType) {
+        return new ExerciseTypeResponse(exerciseType.getId(), exerciseType.getName());
     }
 
 }
