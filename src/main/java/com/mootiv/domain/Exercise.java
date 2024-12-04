@@ -21,6 +21,8 @@ public class Exercise {
 
     private String name;
 
+    private String description;
+
     private boolean isForTime;
 
     private boolean isTotal;
