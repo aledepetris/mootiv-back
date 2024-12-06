@@ -61,8 +61,8 @@ public class StudentResponse {
                                 : emptySet()
                 )
                 .medicalHistory(
-                        nonNull(student.getClinicalHistory().getMedicalHistory())
-                                ? student.getClinicalHistory().getMedicalHistory()
+                        nonNull(student.getClinicalHistory().getConditions())
+                                ? student.getClinicalHistory().getConditions()
                                 : emptySet()
                 )
                 .trainingPlaces(

@@ -1,6 +1,7 @@
 package com.mootiv.domain.persona;
 
 import com.mootiv.domain.cycle.TrainingCycle;
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Embeddable;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.OneToMany;
@@ -16,7 +17,7 @@ import java.util.List;
 @NoArgsConstructor @AllArgsConstructor
 public class TrainingPlan {
 
-    @OneToMany
+    @OneToMany(cascade = CascadeType.ALL)
     @JoinColumn(name = "student_id")
     private List<TrainingCycle> trainingCycles;
 
