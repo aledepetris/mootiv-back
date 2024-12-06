@@ -36,6 +36,12 @@ public class ApiMootivErrors {
     public static final ApiError STUDENT_NOT_FOUND = new ApiError("StudentNotFound", "Student not found");
     public static final ApiError STUDENT_ALREADY_CREATED = new ApiError("StudentAlreadyCreated", "Student already created");
 
+    public static final ApiError MEASURE_NOT_FOUND = new ApiError("MeasureNotFound", "Measure not found");
+    public static final ApiError MEASURE_ALREADY_CREATED = new ApiError("MeasureAlreadyCreated", "Measure already created");
+
+
+    public static final ApiError TRAINING_PLACE_NOT_FOUND = new ApiError("TrainingPlaceNotFound", "Training Place not found");
+    public static final ApiError TRAINING_PLACE_ALREADY_CREATED = new ApiError("TrainingPlaceAlreadyCreated", "Training Place already created");
 
     public static final String REQUIRED_FIELD = "El campo {0} es requerido y no fue informado";
     public static final String CAMPO_CON_VALOR_INVALIDO_CUSTOM = "Error en el campo {0}: {1}";

@@ -43,5 +43,4 @@ public class StudentCrudController {
         return ResponseEntity.ok(studentCrudService.getStudent(idStudent));
     }
 
-
 }

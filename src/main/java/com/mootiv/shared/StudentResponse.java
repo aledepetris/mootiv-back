@@ -1,7 +1,7 @@
 package com.mootiv.shared;
 
 import com.mootiv.domain.Condition;
-import com.mootiv.domain.Measurement;
+import com.mootiv.domain.Measure;
 import com.mootiv.domain.TrainingPlace;
 import com.mootiv.domain.cycle.TrainingCycle;
 import com.mootiv.domain.persona.Student;
@@ -32,7 +32,7 @@ public class StudentResponse {
     private LocalDate birthdate;
     private Boolean active;
     private List<TrainingCycle> trainingCycles;
-    private Set<Measurement> measurements;
+    private Set<Measure> measures;
     private Set<Condition> medicalHistory;
     private Set<TrainingPlace> trainingPlaces;
 
@@ -51,18 +51,18 @@ public class StudentResponse {
                 .birthdate(student.getBirthdate())
                 .active(student.isActive())
                 .trainingCycles(
-                        nonNull(student.getTrainingCycles())
-                                ? student.getTrainingCycles()
+                            nonNull(student.getTrainingPlan().getTrainingCycles())
+                                ? student.getTrainingPlan().getTrainingCycles()
                                 : emptyList()
                 )
-                .measurements(
-                        nonNull(student.getMeasurements())
-                                ? student.getMeasurements()
+                .measures(
+                        nonNull(student.getMeasures())
+                                ? student.getMeasures()
                                 : emptySet()
                 )
                 .medicalHistory(
-                        nonNull(student.getMedicalHistory())
-                                ? student.getMedicalHistory()
+                        nonNull(student.getClinicalHistory().getMedicalHistory())
+                                ? student.getClinicalHistory().getMedicalHistory()
                                 : emptySet()
                 )
                 .trainingPlaces(

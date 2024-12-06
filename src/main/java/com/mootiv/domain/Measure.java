@@ -11,12 +11,12 @@ import java.time.LocalDate;
 
 @Entity
 @Getter @Setter
-public class Measurement {
+public class Measure {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
-    private LocalDate startDate;
+    private LocalDate date;
     private Float height;
     private Float weight;
     private Float shoulder;

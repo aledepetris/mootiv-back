@@ -21,11 +21,8 @@ import static java.util.Objects.nonNull;
 @Getter @Setter
 public class ExerciseResponse {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    @Getter
     private String name;
 
     private boolean isForTime;
@@ -36,7 +33,6 @@ public class ExerciseResponse {
 
     private List<String> exercisesType;
 
-    @ManyToMany(fetch = FetchType.LAZY)
     Set<Equipment> equipment;
 
     public static ExerciseResponse mapFrom(Exercise exercise) {
