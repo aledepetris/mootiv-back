@@ -45,6 +45,8 @@ public class ApiMootivErrors {
     public static final ApiError CONDITION_NOT_FOUND = new ApiError("ConditionNotFound", "Condition not found");
     public static final ApiError CONDITION_ALREADY_CREATED = new ApiError("ConditionAlreadyCreated", "Condition already created");
 
+    public static final ApiError GOAL_DAY_NOT_FOUND = new ApiError("GoalDayNotFound", "Combination of goal and day not exist");
+
 
     public static final String REQUIRED_FIELD = "El campo {0} es requerido y no fue informado";
     public static final String CAMPO_CON_VALOR_INVALIDO_CUSTOM = "Error en el campo {0}: {1}";
