@@ -1,7 +1,6 @@
-package com.mootiv.domain.persona;
+package com.mootiv.domain.plan;
 
 import com.mootiv.domain.TrainingType;
-import com.mootiv.domain.cycle.TrainingCycle;
 import com.mootiv.domain.goal.Goal;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Embeddable;
@@ -31,6 +30,20 @@ public class TrainingPlan {
 
         if (isNull(trainingCycles)) {
             trainingCycles = new ArrayList<>();
+        }
+
+        // Validar que la fecha de inicio no esté en el pasado
+        if (startDate.isBefore(LocalDate.now())) {
+            throw new IllegalArgumentException("El inicio del ciclo no puede ser una fecha pasada.");
+        }
+
+        // Validar que no haya superposición de fechas con otros ciclos vigentes
+        boolean hasOverlap = trainingCycles.stream()
+                .filter(cycle -> !cycle.isCanceled())
+                .anyMatch(cycle -> cycle.overlapsWith(startDate, numberOfWeeks));
+
+        if (hasOverlap) {
+            throw new IllegalStateException("El nuevo ciclo se superpone con otro ciclo vigente.");
         }
 
         trainingCycles.add(TrainingCycle.with(startDate, numberOfWeeks, numberOfDays, goal, trainingType));

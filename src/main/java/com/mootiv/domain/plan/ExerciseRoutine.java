@@ -1,4 +1,4 @@
-package com.mootiv.domain.cycle;
+package com.mootiv.domain.plan;
 
 import com.mootiv.domain.Exercise;
 import jakarta.persistence.*;

@@ -1,6 +1,7 @@
 package com.mootiv.domain.persona;
 
 import com.mootiv.domain.*;
+import com.mootiv.domain.plan.TrainingPlan;
 import com.mootiv.error.exception.NotFoundException;
 import com.mootiv.shared.ConditionRequest;
 import com.mootiv.shared.MeasureRequest;

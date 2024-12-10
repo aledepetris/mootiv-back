@@ -3,7 +3,7 @@ package com.mootiv.shared;
 import com.mootiv.domain.Condition;
 import com.mootiv.domain.Measure;
 import com.mootiv.domain.TrainingPlace;
-import com.mootiv.domain.cycle.TrainingCycle;
+import com.mootiv.domain.plan.TrainingCycle;
 import com.mootiv.domain.persona.Student;
 import lombok.*;
 

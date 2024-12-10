@@ -1,4 +1,4 @@
-package com.mootiv.domain.cycle;
+package com.mootiv.domain.plan;
 
 public enum CycleStatus {
 

@@ -7,9 +7,11 @@ import com.mootiv.repository.StudentRepository;
 import com.mootiv.repository.TrainingTypeRepository;
 import com.mootiv.service.TrainingCycleService;
 import com.mootiv.shared.CycleRequest;
+import org.springframework.stereotype.Service;
 
 import static com.mootiv.error.ApiMootivErrors.*;
 
+@Service
 public class TrainingCycleManager implements TrainingCycleService {
 
     private final StudentRepository studentRepository;
