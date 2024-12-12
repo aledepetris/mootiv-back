@@ -40,16 +40,6 @@ public class MuscleResponse {
                             .toList()
                         : emptyList());
 
-
-        if (muscle.isAMuscleGroup()) {
-            MuscleGroup group = (MuscleGroup) muscle;
-            builder.muscles(nonNull(group)
-                    ? group.getMuscles().stream()
-                        .map(MuscleResponse::mapFromMuscle)
-                        .collect(Collectors.toSet())
-                    : emptySet());
-        }
-
         return builder.build();
 
     }

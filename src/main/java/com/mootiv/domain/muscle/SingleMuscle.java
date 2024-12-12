@@ -21,10 +21,6 @@ public class SingleMuscle extends Muscle {
         return exercises;
     }
 
-    @Override
-    public boolean isAMuscleGroup() {
-        return false;
-    }
 
     @Override
     public void update(String name, Set<Muscle> muscles, Set<Exercise> exercises) {

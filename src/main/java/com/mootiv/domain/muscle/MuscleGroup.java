@@ -33,11 +33,6 @@ public class MuscleGroup extends Muscle {
     }
 
     @Override
-    public boolean isAMuscleGroup() {
-        return true;
-    }
-
-    @Override
     public void update(String name, Set<Muscle> muscles, Set<Exercise> exercises) {
         this.name = name;
         this.muscles = muscles;

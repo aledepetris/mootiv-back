@@ -29,7 +29,6 @@ public abstract class Muscle {
     protected Set<Exercise> exercises;
 
     public abstract Set<Exercise> getAssociatedExcercise();
-    public abstract boolean isAMuscleGroup();
     public abstract void update(String name, Set<Muscle> muscles, Set<Exercise> exercises);
 
     protected Muscle(String name) {

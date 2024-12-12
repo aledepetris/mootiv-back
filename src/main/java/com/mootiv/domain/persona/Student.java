@@ -1,6 +1,7 @@
 package com.mootiv.domain.persona;
 
 import com.mootiv.domain.*;
+import com.mootiv.domain.plan.TrainingCycle;
 import com.mootiv.domain.plan.TrainingPlan;
 import com.mootiv.error.exception.NotFoundException;
 import com.mootiv.shared.ConditionRequest;
@@ -42,6 +43,8 @@ public class Student extends Person {
     private LocalDate startDate;
 
     private boolean active;
+
+    private Repositorio repositorioSubida;
 
     @ManyToOne(cascade = CascadeType.DETACH, fetch = FetchType.LAZY)
     private Trainer trainer;
@@ -227,5 +230,9 @@ public class Student extends Person {
 
     public void deleteCondition(Integer idCondition) {
         this.clinicalHistory.removeCondition(idCondition);
+    }
+
+    public TrainingCycle getCycle(Integer idCiclo) {
+        return this.trainingPlan.getTrainingCycles().getFirst();
     }
 }
