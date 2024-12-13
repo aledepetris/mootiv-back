@@ -45,8 +45,8 @@ public class AffectionCrud implements AffectionCrudService {
             throw new BusinessException(AFFECTION_ALREADY_CREATED);
         }
 
-        if (nonNull(request.getIdsExcludedExercises()))
-            musclesAffected = muscleRepository.findListByIds(request.getIdsExcludedExercises());
+        if (nonNull(request.getIdsMusclesAffected()))
+            musclesAffected = muscleRepository.findListByIds(request.getIdsMusclesAffected());
 
         var affectionSaved = affectionRepository.save(Affection.with(request.getName(), request.getDescription(), musclesAffected));
 
@@ -66,8 +66,8 @@ public class AffectionCrud implements AffectionCrudService {
                 .ifPresent(affection -> { throw new BusinessException(MUSCLE_ALREADY_CREATED);});
 
 
-        if (nonNull(request.getIdsExcludedExercises()))
-            musclesAffected = muscleRepository.findListByIds(request.getIdsExcludedExercises());
+        if (nonNull(request.getIdsMusclesAffected()))
+            musclesAffected = muscleRepository.findListByIds(request.getIdsMusclesAffected());
 
         affectionToUpdate.update(request.getName(), request.getDescription(), musclesAffected);
 

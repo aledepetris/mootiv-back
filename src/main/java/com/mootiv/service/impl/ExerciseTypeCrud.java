@@ -37,7 +37,7 @@ public class ExerciseTypeCrud implements ExerciseTypeCrudService {
         if (exerciseType.isPresent()) {
             throw new BusinessException(EQUIPMENT_ALREADY_CREATED);
         }
-        var exerciseTypeSaved = exerciseTypeRepository.save(new ExerciseType(request.getName()));
+        var exerciseTypeSaved = exerciseTypeRepository.save(new ExerciseType(request.getName(), request.getDescription()));
 
         return ExerciseTypeResponse.mapFrom(exerciseTypeSaved);
 
@@ -54,6 +54,7 @@ public class ExerciseTypeCrud implements ExerciseTypeCrudService {
                 .ifPresent(exerciseType -> { throw new BusinessException(EXERCISE_TYPE_ALREADY_CREATED);});
 
         exerciseTypeToUpdate.setName(request.getName());
+        exerciseTypeToUpdate.setDescription(request.getDescription());
         var muscleSaved = exerciseTypeRepository.save(exerciseTypeToUpdate);
 
         return ExerciseTypeResponse.mapFrom(muscleSaved);

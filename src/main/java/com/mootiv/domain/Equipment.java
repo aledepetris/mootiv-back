@@ -19,8 +19,14 @@ public class Equipment {
 
     private String name;
 
-    public Equipment(String name) {
+    private String description;
+
+    private String alt_img;
+
+    public Equipment(String name, String description, String alt_img) {
         this.name = name;
+        this.description = description;
+        this.alt_img = alt_img;
     }
 
 }

@@ -1,7 +1,6 @@
 
 package com.mootiv.shared;
 
-import com.mootiv.domain.Equipment;
 import com.mootiv.domain.ExerciseType;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -16,8 +15,10 @@ public class ExerciseTypeResponse {
 
     private String name;
 
+    private String description;
+
     public static ExerciseTypeResponse mapFrom(ExerciseType exerciseType) {
-        return new ExerciseTypeResponse(exerciseType.getId(), exerciseType.getName());
+        return new ExerciseTypeResponse(exerciseType.getId(), exerciseType.getName(), exerciseType.getDescription());
     }
 
 }

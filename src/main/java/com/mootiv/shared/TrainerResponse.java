@@ -28,7 +28,7 @@ public class TrainerResponse {
 
     private LocalDate birthdate;
 
-    private List<String> students;
+    private List<StudentResponse> students;
 
     private Boolean active;
 
@@ -43,7 +43,7 @@ public class TrainerResponse {
                 .birthdate(trainer.getBirthdate())
                 .students(nonNull(trainer.getStudents())
                         ? trainer.getStudents().stream()
-                                    .map(student -> student.getLastName() + ", " + student.getName())
+                                    .map(StudentResponse::mapFrom)
                                     .toList()
                         : emptyList())
                 .active(trainer.isActive())

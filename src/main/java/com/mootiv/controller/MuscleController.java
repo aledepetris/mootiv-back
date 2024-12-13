@@ -3,14 +3,14 @@ package com.mootiv.controller;
 import com.mootiv.service.MuscleCrudService;
 import com.mootiv.shared.MuscleRequest;
 import com.mootiv.shared.MuscleResponse;
+import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotNull;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import jakarta.validation.Valid;
 
 import java.net.URI;
-import java.util.List;
+import java.util.Set;
 
 @RestController
 @RequestMapping("/bff/v1/muscle")
@@ -24,7 +24,7 @@ public class MuscleController {
     }
 
     @GetMapping
-    public ResponseEntity<List<MuscleResponse>> getMuscles() {
+    public ResponseEntity<Set<MuscleResponse>> getMuscles() {
         return ResponseEntity
                 .ok(muscleCrudService.getMuscles());
     }

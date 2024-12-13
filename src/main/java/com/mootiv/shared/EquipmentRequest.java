@@ -10,4 +10,8 @@ public class EquipmentRequest {
     @NotBlank
     private String name;
 
+    private String description;
+
+    private String alt_img;
+
 }

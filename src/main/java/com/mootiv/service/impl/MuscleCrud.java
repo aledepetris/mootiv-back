@@ -2,6 +2,7 @@ package com.mootiv.service.impl;
 
 import com.mootiv.domain.Exercise;
 import com.mootiv.domain.muscle.Muscle;
+import com.mootiv.domain.muscle.MuscleGroup;
 import com.mootiv.error.exception.BusinessException;
 import com.mootiv.error.exception.NotFoundException;
 import com.mootiv.repository.ExerciseRepository;
@@ -13,8 +14,8 @@ import lombok.extern.log4j.Log4j2;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
-import java.util.Set;
+import java.util.*;
+import java.util.stream.Collectors;
 
 import static com.mootiv.error.ApiMootivErrors.MUSCLE_ALREADY_CREATED;
 import static com.mootiv.error.ApiMootivErrors.MUSCLE_NOT_FOUND;
@@ -33,10 +34,29 @@ public class MuscleCrud implements MuscleCrudService {
     }
 
     @Override
-    public List<MuscleResponse> getMuscles() {
-        return muscleRepository.findAll().stream()
-                .map(MuscleResponse::mapFromMuscle)
-                .toList();
+    public Set<MuscleResponse> getMuscles() {
+        List<Muscle> muscles = muscleRepository.findAll();
+
+        // Identificar los nodos raíz (ancianos)
+        Set<Muscle> rootMuscles = findRoots(muscles);
+
+        // Convertir los nodos raíz en MuscleResponse
+        return rootMuscles.stream()
+                .map(muscle -> MuscleResponse.mapFromMuscleHierarchy(muscle, new HashSet<>()))
+                .collect(Collectors.toSet());
+    }
+
+    private Set<Muscle> findRoots(List<Muscle> muscles) {
+        // Los nodos raíz son aquellos que no están en la lista de hijos de ningún grupo
+        Set<Muscle> allChildren = muscles.stream()
+                .filter(Muscle::isAMuscleGroup)
+                .map(muscle -> ((MuscleGroup) muscle).getMuscles())
+                .flatMap(Set::stream)
+                .collect(Collectors.toSet());
+
+        return muscles.stream()
+                .filter(muscle -> !allChildren.contains(muscle))
+                .collect(Collectors.toSet());
     }
 
     @Override

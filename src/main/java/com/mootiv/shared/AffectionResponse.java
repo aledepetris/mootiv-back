@@ -15,15 +15,15 @@ public class AffectionResponse {
     private Integer id;
     private String name;
     private String description;
-    private List<String> musclesAffected;
+    private List<Integer> idsMusclesAffected;
 
     public static AffectionResponse mapFrom(Affection affection) {
         return AffectionResponse.builder()
                 .id(affection.getId())
                 .name(affection.getName())
                 .description(affection.getDescription())
-                .musclesAffected(affection.getMusclesAffected().stream()
-                        .map(Muscle::getName)
+                .idsMusclesAffected(affection.getMusclesAffected().stream()
+                        .map(Muscle::getId)
                         .toList()
                 )
                 .build();

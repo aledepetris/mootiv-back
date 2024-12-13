@@ -9,5 +9,6 @@ public class ExerciseTypeRequest {
 
     @NotBlank
     private String name;
+    private String description;
 
 }

@@ -37,7 +37,7 @@ public class EquipmentCrud implements EquipmentCrudService {
         if (equipment.isPresent()) {
             throw new BusinessException(EQUIPMENT_ALREADY_CREATED);
         }
-        var equipmentSaved = equipmentRepository.save(new Equipment(request.getName()));
+        var equipmentSaved = equipmentRepository.save(new Equipment(request.getName(), request.getDescription(), request.getAlt_img()));
 
         return EquipmentResponse.mapFrom(equipmentSaved);
 
@@ -54,6 +54,8 @@ public class EquipmentCrud implements EquipmentCrudService {
                 .ifPresent(equipment -> { throw new BusinessException(EQUIPMENT_ALREADY_CREATED);});
 
         equipmentToUpdate.setName(request.getName());
+        equipmentToUpdate.setDescription(request.getDescription());
+        equipmentToUpdate.setAlt_img(request.getAlt_img());
         var equipmentSaved = equipmentRepository.save(equipmentToUpdate);
 
         return EquipmentResponse.mapFrom(equipmentSaved);

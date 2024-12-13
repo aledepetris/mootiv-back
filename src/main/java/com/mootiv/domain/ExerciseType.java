@@ -19,7 +19,10 @@ public class ExerciseType {
 
     private String name;
 
-    public ExerciseType(String name) {
+    private String description;
+
+    public ExerciseType(String name, String description) {
         this.name = name;
+        this.description = description;
     }
 }

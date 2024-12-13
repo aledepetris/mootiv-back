@@ -13,6 +13,6 @@ public class AffectionRequest {
     private String name;
     @NotBlank
     private String description;
-    private List<Integer> idsExcludedExercises;
+    private List<Integer> idsMusclesAffected;
 
 }
