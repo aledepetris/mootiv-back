@@ -15,6 +15,6 @@ public class ScheduleGoalResponse {
     private Integer day;
 
     @NotEmpty
-    private List<String> trainingTypes;
+    private List<Integer> idsTrainingTypes;
 
 }

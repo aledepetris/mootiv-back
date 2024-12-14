@@ -25,8 +25,8 @@ public class GoalResponse {
                         goal.getScheduleGoals().stream()
                                 .map(scheduleGoal -> ScheduleGoalResponse.builder()
                                         .day(scheduleGoal.getDayOfTraining())
-                                        .trainingTypes(scheduleGoal.getTrainingTypes().stream()
-                                                .map(TrainingType::getName).toList())
+                                        .idsTrainingTypes(scheduleGoal.getTrainingTypes().stream()
+                                                .map(TrainingType::getId).toList())
                                         .build())
                                 .toList()
                 ).build();

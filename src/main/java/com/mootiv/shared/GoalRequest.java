@@ -15,6 +15,6 @@ public class GoalRequest {
     @NotBlank
     private String description;
     @NotEmpty
-    private Set<ScheduleGoalRequest> goalTrainingTypes;
+    private Set<ScheduleGoalRequest> scheduleGoals;
 
 }

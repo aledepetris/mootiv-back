@@ -41,7 +41,7 @@ public class GoalCrud implements GoalCrudService {
     @Override
     public GoalResponse createGoal(GoalRequest request) {
 
-        if(isNull(request.getGoalTrainingTypes()) || request.getGoalTrainingTypes().isEmpty())
+        if(isNull(request.getScheduleGoals()) || request.getScheduleGoals().isEmpty())
             throw new RuntimeException("Debe proporcionar al menos una scheduleGoal");
 
         var goal = goalRepository.findByName(request.getName());
@@ -49,7 +49,7 @@ public class GoalCrud implements GoalCrudService {
             throw new BusinessException(GOAL_ALREADY_CREATED);
         }
 
-        Set<ScheduleGoal> scheduleGoals = request.getGoalTrainingTypes()
+        Set<ScheduleGoal> scheduleGoals = request.getScheduleGoals()
                 .stream()
                         .map(dto -> {
                             var listTraining = trainingTypeRepository.findListByIds(dto.getIdsTrainingTypes());
@@ -65,7 +65,7 @@ public class GoalCrud implements GoalCrudService {
     @Override
     public GoalResponse updateGoal(Integer id, GoalRequest request) {
 
-        if(isNull(request.getGoalTrainingTypes()) || request.getGoalTrainingTypes().isEmpty())
+        if(isNull(request.getScheduleGoals()) || request.getScheduleGoals().isEmpty())
             throw new RuntimeException("Debe proporcionar al menos una scheduleGoal");
 
         var goalToUpdate = goalRepository.findById(id)
@@ -76,7 +76,7 @@ public class GoalCrud implements GoalCrudService {
                 .filter(existingGoal -> !existingGoal.getId().equals(id))
                 .ifPresent(goal -> { throw new BusinessException(GOAL_ALREADY_CREATED);});
 
-        Set<ScheduleGoal> scheduleGoals = request.getGoalTrainingTypes()
+        Set<ScheduleGoal> scheduleGoals = request.getScheduleGoals()
                 .stream()
                 .map(dto -> {
                     var listTraining = trainingTypeRepository.findListByIds(dto.getIdsTrainingTypes());

@@ -40,7 +40,6 @@ public class MuscleResponse {
                             .toList()
                         : emptyList());
 
-
         if (muscle.isAMuscleGroup()) {
             MuscleGroup group = (MuscleGroup) muscle;
             builder.muscles(nonNull(group)
