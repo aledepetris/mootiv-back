@@ -1,6 +1,5 @@
 package com.mootiv.shared;
 
-import com.mootiv.domain.Affection;
 import com.mootiv.domain.Condition;
 import lombok.Builder;
 import lombok.Getter;
@@ -14,6 +13,7 @@ public class ConditionResponse {
 
     private Integer id;
     private AffectionResponse affection;
+    private String afeccion;
     private LocalDate diagnosisDate;
     private String severity;
     private String currentStatus;
@@ -22,6 +22,7 @@ public class ConditionResponse {
     public static ConditionResponse mapFrom(Condition condition) {
         return ConditionResponse.builder()
                 .id(condition.getId())
+                .afeccion(condition.getAffection().getName())
                 .affection(AffectionResponse.mapFrom(condition.getAffection()))
                 .diagnosisDate(condition.getDiagnosisDate())
                 .severity(condition.getSeverity().name())

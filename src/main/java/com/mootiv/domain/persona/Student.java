@@ -52,7 +52,7 @@ public class Student extends Person {
     @Embedded
     private ClinicalHistory clinicalHistory;
 
-    @OneToMany(cascade = CascadeType.ALL)
+    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
     @JoinColumn(name = "student_id")
     private Set<Measure> measures;
 
@@ -99,7 +99,7 @@ public class Student extends Person {
             this.measures = new HashSet<>();
         }
         var measure = new Measure();
-        measure.setDate(isNull(request.getDate()) ? LocalDate.now() : request.getDate());
+        measure.setDate(isNull(request.getStartDate()) ? LocalDate.now() : request.getStartDate());
         measure.setHeight(request.getHeight());
         measure.setWeight(request.getWeight());
         measure.setShoulder(request.getShoulder());
@@ -117,7 +117,7 @@ public class Student extends Person {
                         .findAny()
                                 .orElseThrow(NotFoundException.of(MEASURE_NOT_FOUND));
 
-        measureToUpdate.setDate(isNull(request.getDate()) ? LocalDate.now() : request.getDate());
+        measureToUpdate.setDate(isNull(request.getStartDate()) ? LocalDate.now() : request.getStartDate());
         measureToUpdate.setHeight(request.getHeight());
         measureToUpdate.setWeight(request.getWeight());
         measureToUpdate.setShoulder(request.getShoulder());

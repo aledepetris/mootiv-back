@@ -3,18 +3,15 @@ package com.mootiv.shared;
 import com.mootiv.domain.Condition;
 import com.mootiv.domain.Measure;
 import com.mootiv.domain.TrainingPlace;
-import com.mootiv.domain.plan.TrainingCycle;
 import com.mootiv.domain.persona.Student;
+import com.mootiv.domain.plan.TrainingCycle;
 import lombok.*;
 
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Set;
 
-import static java.util.Collections.emptyList;
-import static java.util.Collections.emptySet;
 import static java.util.Objects.isNull;
-import static java.util.Objects.nonNull;
 
 @Builder
 @Getter @Setter
@@ -50,28 +47,7 @@ public class StudentResponse {
                 .telephone(student.getTelephone())
                 .birthdate(student.getBirthdate())
                 .active(student.isActive())
-                .trainingCycles(
-                            nonNull(student.getTrainingPlan().getTrainingCycles())
-                                ? student.getTrainingPlan().getTrainingCycles()
-                                : emptyList()
-                )
-                .measures(
-                        nonNull(student.getMeasures())
-                                ? student.getMeasures()
-                                : emptySet()
-                )
-                .medicalHistory(
-                        nonNull(student.getClinicalHistory().getConditions())
-                                ? student.getClinicalHistory().getConditions()
-                                : emptySet()
-                )
-                .trainingPlaces(
-                        nonNull(student.getTrainingPlaces())
-                                ? student.getTrainingPlaces()
-                                : emptySet()
-                )
                 .build();
-
     }
 
 }

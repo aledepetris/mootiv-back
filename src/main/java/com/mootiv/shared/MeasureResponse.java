@@ -20,6 +20,10 @@ public class MeasureResponse {
     private Float waist;
     private Float hip;
     private Float leg;
+    private Float bmi;
+    private String bmiStatus;
+    private Float waistToHipRatio;
+    private Float waistToHeightRatio;
 
     public static MeasureResponse mapFrom(Measure measure) {
         return MeasureResponse.builder()
@@ -33,6 +37,10 @@ public class MeasureResponse {
                 .waist(measure.getWaist())
                 .hip(measure.getHip())
                 .leg(measure.getLeg())
+                .bmi(measure.calculateBMI())
+                .bmiStatus(measure.getBMICategory().name())
+                .waistToHipRatio(measure.calculateWaistToHipRatio())
+                .waistToHeightRatio(measure.calculateWaistToHeightRatio())
                 .build();
     }
 

@@ -5,7 +5,6 @@ import com.mootiv.domain.Equipment;
 import com.mootiv.domain.Exercise;
 import com.mootiv.domain.ExerciseType;
 import com.mootiv.domain.muscle.Muscle;
-import jakarta.persistence.*;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
@@ -25,30 +24,36 @@ public class ExerciseResponse {
 
     private String name;
 
+    private String description;
+
+    private String alt_img;
+
     private boolean isForTime;
 
     private boolean isTotal;
 
-    private List<String> muscles;
+    private List<Integer> idsMuscles;
 
-    private List<String> exercisesType;
+    private List<Integer> idsExercisesType;
 
-    Set<Equipment> equipment;
+    private List<Integer> idsEquipments;
 
     public static ExerciseResponse mapFrom(Exercise exercise) {
         return ExerciseResponse.builder()
                 .id(exercise.getId())
                 .name(exercise.getName())
+                .description(exercise.getDescription())
                 .isForTime(exercise.isForTime())
                 .isTotal(exercise.isTotal())
-                .equipment(nonNull(exercise.getEquipments())
-                        ? exercise.getEquipments()
-                        : emptySet())
-                .muscles(nonNull(exercise.getMuscles())
-                        ? exercise.getMuscles().stream().map(Muscle::getName).toList()
+                .alt_img(exercise.getAlt_img())
+                .idsEquipments(nonNull(exercise.getEquipments())
+                        ? exercise.getEquipments().stream().map(Equipment::getId).toList()
                         : emptyList())
-                .exercisesType(nonNull(exercise.getExercisesType())
-                        ? exercise.getExercisesType().stream().map(ExerciseType::getName).toList()
+                .idsMuscles(nonNull(exercise.getMuscles())
+                        ? exercise.getMuscles().stream().map(Muscle::getId).toList()
+                        : emptyList())
+                .idsExercisesType(nonNull(exercise.getExercisesType())
+                        ? exercise.getExercisesType().stream().map(ExerciseType::getId).toList()
                         : emptyList())
                 .build();
     }

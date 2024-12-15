@@ -22,7 +22,7 @@ public class Exercise {
     private String name;
 
     private String description;
-
+    private String alt_img;
     private boolean isForTime;
 
     private boolean isTotal;
@@ -42,11 +42,13 @@ public class Exercise {
     Set<Equipment> equipments;
 
 
-    public static Exercise with(String name, boolean isForTime, boolean isTotal,
+    public static Exercise with(String name, String altImg, String description, boolean isForTime, boolean isTotal,
                                 Set<Muscle> muscles, Set<ExerciseType> exercisesType, Set<Equipment> equipments) {
 
         Exercise exercise = new Exercise();
         exercise.setName(name);
+        exercise.setAlt_img(altImg);
+        exercise.setDescription(description);
         exercise.setExercisesType(exercisesType);
         exercise.setMuscles(muscles);
         exercise.setEquipments(equipments);
@@ -57,9 +59,11 @@ public class Exercise {
 
     }
 
-    public void update(@NotBlank String name, @NotNull Boolean isTotal, @NotNull Boolean isForTime,
+    public void update(@NotBlank String name, String altImg, String description, @NotNull Boolean isTotal, @NotNull Boolean isForTime,
                        Set<Muscle> muscles, Set<ExerciseType> exerciseTypes, Set<Equipment> equipments) {
         this.name = name;
+        this.alt_img = altImg;
+        this.description = description;
         this.isTotal = isTotal;
         this.isForTime = isForTime;
         this.muscles = muscles;

@@ -5,6 +5,6 @@ public enum BMIResult {
     UNDERWEIGHT,
     NORMAL,
     OVERWEIGHT,
-    OBESITY
+    SOBREPESO, BAJO_PESO, OBESIDAD, OBESITY
 
 }

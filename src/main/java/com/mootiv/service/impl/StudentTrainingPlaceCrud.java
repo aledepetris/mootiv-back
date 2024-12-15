@@ -40,8 +40,8 @@ public class StudentTrainingPlaceCrud implements StudentTrainingPlaceService {
                 .orElseThrow(NotFoundException.of(STUDENT_NOT_FOUND));
 
         Set<Equipment> equipments = null;
-        if (!request.getIdsEquipments().isEmpty())
-            equipments = equipmentRepository.findListByIds(request.getIdsEquipments());
+        if (!request.getIdsEquipment().isEmpty())
+            equipments = equipmentRepository.findListByIds(request.getIdsEquipment());
 
         student.addTrainingPlace(request.getName(), equipments);
         studentRepository.save(student);
@@ -54,8 +54,8 @@ public class StudentTrainingPlaceCrud implements StudentTrainingPlaceService {
                 .orElseThrow(NotFoundException.of(STUDENT_NOT_FOUND));
 
         Set<Equipment> equipments = null;
-        if (!request.getIdsEquipments().isEmpty())
-            equipments = equipmentRepository.findListByIds(request.getIdsEquipments());
+        if (!request.getIdsEquipment().isEmpty())
+            equipments = equipmentRepository.findListByIds(request.getIdsEquipment());
 
         student.updateTrainingPlace(idTrainingPlace, request.getName(), equipments);
         studentRepository.save(student);

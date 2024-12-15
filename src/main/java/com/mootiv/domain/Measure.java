@@ -26,18 +26,20 @@ public class Measure {
     private Float hip;
     private Float leg;
 
-    public double calculateBMI() {
-        return weight / (height * height);
+    public Float calculateBMI() {
+        Float heightInMeters = height / 100;
+        return weight / (heightInMeters * heightInMeters);
     }
 
-    public double calculateWaistToHipRatio() {
+
+    public Float calculateWaistToHipRatio() {
         if (hip == 0) {
             throw new IllegalArgumentException("Hip measurement cannot be zero.");
         }
         return waist / hip;
     }
 
-    public double calculateWaistToHeightRatio() {
+    public Float calculateWaistToHeightRatio() {
         if (height == 0) {
             throw new IllegalArgumentException("Height cannot be zero.");
         }
@@ -45,11 +47,11 @@ public class Measure {
     }
 
     public BMIResult getBMICategory() {
-        double bmi = calculateBMI();
-        if (bmi < 18.5) return BMIResult.UNDERWEIGHT;
+        Float bmi = calculateBMI();
+        if (bmi < 18.5) return BMIResult.BAJO_PESO;
         if (bmi < 25) return BMIResult.NORMAL;
-        if (bmi < 30) return BMIResult.OVERWEIGHT;
-        return BMIResult.OBESITY;
+        if (bmi < 30) return BMIResult.SOBREPESO;
+        return BMIResult.OBESIDAD;
     }
 
 }

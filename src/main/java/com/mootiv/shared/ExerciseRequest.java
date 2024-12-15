@@ -13,6 +13,10 @@ public class ExerciseRequest {
     @NotBlank
     private String name;
 
+    private String description;
+
+    private String alt_img;
+
     @NotNull
     private Boolean isForTime;
 

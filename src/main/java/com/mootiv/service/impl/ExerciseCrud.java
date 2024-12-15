@@ -67,7 +67,7 @@ public class ExerciseCrud implements ExerciseCrudService {
             equipment = equipmentRepository.findListByIds(request.getIdsEquipments());
 
 
-        var ex = Exercise.with(request.getName(), request.getIsTotal(), request.getIsForTime(), muscles, exerciseTypes, equipment);
+        var ex = Exercise.with(request.getName(), request.getAlt_img(), request.getDescription(), request.getIsTotal(), request.getIsForTime(), muscles, exerciseTypes, equipment);
 
         exerciseRepository.save(ex);
 
@@ -99,7 +99,7 @@ public class ExerciseCrud implements ExerciseCrudService {
             equipments = equipmentRepository.findListByIds(request.getIdsEquipments());
 
 
-        exerciseToUpdate.update(request.getName(), request.getIsTotal(), request.getIsForTime(), muscles, exerciseTypes, equipments);
+        exerciseToUpdate.update(request.getName(), request.getAlt_img(), request.getDescription(), request.getIsTotal(), request.getIsForTime(), muscles, exerciseTypes, equipments);
 
         exerciseRepository.save(exerciseToUpdate);
 
