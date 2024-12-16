@@ -21,7 +21,7 @@ public class CsvRutinaExporter extends RutinaExporter {
     }
 
     @Override
-    protected void processDay(TrainingDay day, int index, ByteArrayOutputStream outputStream) {
+    protected void adjustExercise(TrainingDay day, int index, ByteArrayOutputStream outputStream) {
         PrintWriter writer = new PrintWriter(outputStream);
 
         // Línea que indica el número del día

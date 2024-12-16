@@ -39,7 +39,7 @@ public abstract class RutinaExporter {
 
     // Steps to be implemented in subclasses
     protected abstract void initializeDocument(ByteArrayOutputStream outputStream);
-    protected abstract void processDay(TrainingDay day, int dayIndex, ByteArrayOutputStream outputStream);
+    protected abstract void adjustExercise(TrainingDay day, int dayIndex, ByteArrayOutputStream outputStream);
     protected abstract void finalizeDocument(ByteArrayOutputStream outputStream);
 
     private void processWeek(TrainingWeek week, ByteArrayOutputStream outputStream) {
@@ -51,7 +51,7 @@ public abstract class RutinaExporter {
         // Procesar los días ordenados
         int dayIndex = 1;
         for (TrainingDay day : sortedDays) {
-            processDay(day, dayIndex, outputStream);
+            adjustExercise(day, dayIndex, outputStream);
             dayIndex++;
         }
     }

@@ -33,13 +33,14 @@ public class PdfRutinaExporter extends RutinaExporter {
         }
     }
 
+
     @Override
-    protected void processDay(TrainingDay day, int index, ByteArrayOutputStream outputStream) {
+    protected void adjustExercise(TrainingDay day, int index, ByteArrayOutputStream outputStream) {
         try {
             document.add(new Paragraph("Dia: " + index));
             for (ExerciseRoutine routine : day.getExercises()) {
                 document.add(new Paragraph(String.format(
-                        "%s - Sets: %d, Reps: %d, Weight: %.2f, Rest: %d, Notes: %s",
+                        "%s - Series: %d, Repeticiones: %d, Peso(Kg): %.2f, Descanso(Seg): %d, Notas: %s",
                         routine.getExercise().getName(),
                         routine.getSets(),
                         routine.getRepetitions(),
