@@ -6,6 +6,8 @@ import com.mootiv.domain.plan.TrainingWeek;
 
 import java.util.Base64;
 import java.io.ByteArrayOutputStream;
+import java.util.Comparator;
+import java.util.List;
 
 public abstract class RutinaExporter {
 
@@ -41,11 +43,18 @@ public abstract class RutinaExporter {
     protected abstract void finalizeDocument(ByteArrayOutputStream outputStream);
 
     private void processWeek(TrainingWeek week, ByteArrayOutputStream outputStream) {
+        // Ordenar los días por su ID en orden ascendente
+        List<TrainingDay> sortedDays = week.getDays().stream()
+                .sorted(Comparator.comparing(TrainingDay::getId)) // Ordenar por ID
+                .toList();
+
+        // Procesar los días ordenados
         int dayIndex = 1;
-        for (TrainingDay day : week.getDays()) {
+        for (TrainingDay day : sortedDays) {
             processDay(day, dayIndex, outputStream);
             dayIndex++;
         }
     }
+
 
 }

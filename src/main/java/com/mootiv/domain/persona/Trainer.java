@@ -66,11 +66,4 @@ public class Trainer extends Person {
         this.students.add(student);
     }
 
-    @Override
-    public Integer getAge() {
-        if (birthdate == null) {
-            throw new IllegalStateException("Birthdate is not set");
-        }
-        return Period.between(birthdate, LocalDate.now()).getYears();
-    }
 }

@@ -3,8 +3,7 @@ package com.mootiv.controller;
 import com.mootiv.service.ExerciseCrudService;
 import com.mootiv.shared.ExerciseRequest;
 import com.mootiv.shared.ExerciseResponse;
-import com.mootiv.shared.ExerciseTemplateDto;
-import com.mootiv.shared.ExerciseTemplateResponse;
+import com.mootiv.shared.ExerciseTemplateWrap;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -55,15 +54,45 @@ public class ExerciseController {
     }
 
     @GetMapping("/templates/week")
-    public ResponseEntity< List<ExerciseTemplateResponse> > getAllWeekTemplate() {
+    public ResponseEntity< List<ExerciseTemplateWrap> > getAllWeekTemplate() {
         return ResponseEntity
                 .ok(exerciseCrudService.getTemplateWeek());
     }
 
     @GetMapping("/templates")
-    public ResponseEntity< List<ExerciseTemplateResponse> > getAllGrupoExerciseTemplate() {
+    public ResponseEntity< List<ExerciseTemplateWrap> > getAllGrupoExerciseTemplate() {
         return ResponseEntity
                 .ok(exerciseCrudService.getTemplateExercises());
+    }
+
+    @GetMapping("/templates-list")
+    public ResponseEntity< List<ExerciseTemplateWrap> > getAllGrupoExerciseTemplateForEdit() {
+        return ResponseEntity
+                .ok(exerciseCrudService.getTemplateExercisesList());
+    }
+
+    @PostMapping("/templates")
+    public ResponseEntity<ExerciseTemplateWrap> addTemplateExercise(@RequestBody @Valid ExerciseTemplateWrap requestBody) {
+        return ResponseEntity
+                .created(URI.create("/bff/v1/exercise"))
+                .body(exerciseCrudService.createTemplate(requestBody));
+    }
+
+    @PutMapping("/templates/{idTemplate}")
+    public ResponseEntity<ExerciseTemplateWrap> updateTemplateExercise(@PathVariable Integer idTemplate, @RequestBody @Valid ExerciseTemplateWrap requestBody) {
+        return ResponseEntity.ok(exerciseCrudService.updateTemplate(idTemplate, requestBody));
+    }
+
+    @GetMapping("/templates/{idTemplate}")
+    public ResponseEntity<ExerciseTemplateWrap> getTemplateExercise(@PathVariable Integer idTemplate) {
+        return ResponseEntity.ok(exerciseCrudService.getExerciseTemplate(idTemplate));
+    }
+
+    @DeleteMapping("/templates/{idTemplate}")
+    public ResponseEntity<Void> deleteTemplateExercise(@PathVariable Integer idTemplate) {
+        exerciseCrudService.deleteExerciseTemplate(idTemplate);
+        return ResponseEntity.noContent()
+                .build();
     }
 
 }

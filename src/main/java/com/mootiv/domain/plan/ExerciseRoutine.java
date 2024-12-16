@@ -1,6 +1,7 @@
 package com.mootiv.domain.plan;
 
 import com.mootiv.domain.Exercise;
+import com.mootiv.domain.templates.TemplateExercises;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;

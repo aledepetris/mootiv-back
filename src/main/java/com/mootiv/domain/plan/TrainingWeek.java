@@ -42,8 +42,6 @@ public class TrainingWeek {
     public void changeToInProgress() {
         if (this.status.equals(TrainingWeekStatus.PENDIENTE) && this.startDate.isBefore(LocalDate.now().plusDays(1))) {
             this.status = TrainingWeekStatus.EN_PROGRESO;
-        } else {
-            throw new RuntimeException("No es posible pasar a EN_PROGRESO desde " + this.status.name());
         }
     }
 

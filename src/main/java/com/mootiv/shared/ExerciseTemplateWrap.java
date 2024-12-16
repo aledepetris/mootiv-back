@@ -10,22 +10,25 @@ import java.util.List;
 
 @Builder
 @Getter @Setter
-public class ExerciseTemplateResponse {
+public class ExerciseTemplateWrap {
 
     Integer id;
     String name;
+    String description;
     LocalDate creationDate;
     List<ExerciseTemplateDto> exercises;
 
-    public static ExerciseTemplateResponse mapFrom(TemplateExercises template) {
+    public static ExerciseTemplateWrap mapFrom(TemplateExercises template, boolean idRequired) {
 
-        return ExerciseTemplateResponse.builder()
+        return ExerciseTemplateWrap.builder()
                 .id(template.getId())
                 .name(template.getName())
+                .description(template.getDescription())
                 .creationDate(template.getCreationDate())
                 .exercises(
                         template.getExercises().stream()
                                 .map(ex -> ExerciseTemplateDto.builder()
+                                        .id(idRequired ? ex.getId(): null)
                                         .exercise(ex.getExercise())
                                         .notes(ex.getNotes())
                                         .rest(ex.getRest())

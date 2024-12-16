@@ -5,18 +5,22 @@ import com.mootiv.domain.Equipment;
 import com.mootiv.domain.Exercise;
 import com.mootiv.domain.ExerciseType;
 import com.mootiv.domain.muscle.Muscle;
+import com.mootiv.domain.plan.ExerciseRoutine;
+import com.mootiv.domain.templates.TemplateExercises;
 import com.mootiv.error.exception.BusinessException;
 import com.mootiv.error.exception.NotFoundException;
 import com.mootiv.repository.*;
 import com.mootiv.service.ExerciseCrudService;
 import com.mootiv.shared.ExerciseRequest;
 import com.mootiv.shared.ExerciseResponse;
-import com.mootiv.shared.ExerciseTemplateResponse;
+import com.mootiv.shared.ExerciseTemplateWrap;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 import static com.mootiv.error.ApiMootivErrors.*;
 import static java.util.Objects.nonNull;
@@ -125,19 +129,93 @@ public class ExerciseCrud implements ExerciseCrudService {
     }
 
     @Override
-    public  List<ExerciseTemplateResponse>  getTemplateWeek() {
+    public  List<ExerciseTemplateWrap>  getTemplateWeek() {
         return null;
     }
 
     @Override
-    public List<ExerciseTemplateResponse> getTemplateExercises() {
-
+    public List<ExerciseTemplateWrap> getTemplateExercises() {
         return templateExerciseRepository.findAll()
                 .stream()
-                .map(template -> ExerciseTemplateResponse.mapFrom(template))
+                .map(template -> ExerciseTemplateWrap.mapFrom(template, false))
                 .toList();
+    }
 
+    @Override
+    public List<ExerciseTemplateWrap> getTemplateExercisesList() {
+        return templateExerciseRepository.findAll()
+                .stream()
+                .map(template -> ExerciseTemplateWrap.mapFrom(template, true))
+                .toList();
+    }
 
+    @Override
+    public ExerciseTemplateWrap createTemplate(ExerciseTemplateWrap requestBody) {
+        TemplateExercises templateExercises = new TemplateExercises();
+        templateExercises.setCreationDate(LocalDate.now());
+        templateExercises.setName(requestBody.getName());
+        templateExercises.setDescription(requestBody.getDescription());
+
+        Set<ExerciseRoutine> listExercises = requestBody.getExercises().stream()
+                .map(exerciseTemplate -> {
+                    var exRoutine = new ExerciseRoutine();
+                    exRoutine.setExercise(exerciseTemplate.getExercise());
+                    exRoutine.setRest(exerciseTemplate.getRest());
+                    exRoutine.setRepetitions(exerciseTemplate.getRepetitions());
+                    exRoutine.setSets(exerciseTemplate.getSets());
+                    exRoutine.setNotes(exerciseTemplate.getNotes());
+                    exRoutine.setWeight(exerciseTemplate.getWeight());
+                    return exRoutine;
+                })
+                .collect(Collectors.toSet());
+
+        templateExercises.setExercises(listExercises);
+
+        templateExerciseRepository.save(templateExercises);
+        return null;
+    }
+
+    @Override
+    public ExerciseTemplateWrap updateTemplate(Integer idTemplate, ExerciseTemplateWrap requestBody) {
+
+        TemplateExercises templateExercises = templateExerciseRepository.findById(idTemplate)
+                .orElseThrow(NotFoundException.of(EXERCISE_NOT_FOUND));
+
+        templateExercises.setName(requestBody.getName());
+        templateExercises.setDescription(requestBody.getDescription());
+
+        Set<ExerciseRoutine> listExercises = requestBody.getExercises().stream()
+                .map(exerciseTemplate -> {
+                    var exRoutine = new ExerciseRoutine();
+                    exRoutine.setId(exerciseTemplate.getId());
+                    exRoutine.setExercise(exerciseTemplate.getExercise());
+                    exRoutine.setRest(exerciseTemplate.getRest());
+                    exRoutine.setRepetitions(exerciseTemplate.getRepetitions());
+                    exRoutine.setSets(exerciseTemplate.getSets());
+                    exRoutine.setNotes(exerciseTemplate.getNotes());
+                    exRoutine.setWeight(exerciseTemplate.getWeight());
+                    return exRoutine;
+                })
+                .collect(Collectors.toSet());
+
+        templateExercises.setExercises(listExercises);
+
+        templateExerciseRepository.save(templateExercises);
+        return null;
+
+    }
+
+    @Override
+    public ExerciseTemplateWrap getExerciseTemplate(Integer idTemplate) {
+        return ExerciseTemplateWrap.mapFrom(
+                templateExerciseRepository.findById(idTemplate)
+                .orElseThrow(NotFoundException.of(EXERCISE_NOT_FOUND)), true);
+
+    }
+
+    @Override
+    public void deleteExerciseTemplate(Integer idTemplate) {
+        templateExerciseRepository.deleteById(idTemplate);
     }
 
 }
