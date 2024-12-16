@@ -7,13 +7,11 @@ import com.mootiv.domain.ExerciseType;
 import com.mootiv.domain.muscle.Muscle;
 import com.mootiv.error.exception.BusinessException;
 import com.mootiv.error.exception.NotFoundException;
-import com.mootiv.repository.EquipmentRepository;
-import com.mootiv.repository.ExerciseRepository;
-import com.mootiv.repository.ExerciseTypeRepository;
-import com.mootiv.repository.MuscleRepository;
+import com.mootiv.repository.*;
 import com.mootiv.service.ExerciseCrudService;
 import com.mootiv.shared.ExerciseRequest;
 import com.mootiv.shared.ExerciseResponse;
+import com.mootiv.shared.ExerciseTemplateResponse;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 
@@ -30,12 +28,16 @@ public class ExerciseCrud implements ExerciseCrudService {
     private final ExerciseTypeRepository exerciseTypeRepository;
     private final MuscleRepository muscleRepository;
     private final EquipmentRepository equipmentRepository;
+    private final TemplateExerciseRepository templateExerciseRepository;
+    private final TemplateWeekRepository templateWeekRepository;
 
-    public ExerciseCrud(ExerciseRepository exerciseRepository, ExerciseTypeRepository exerciseTypeRepository, MuscleRepository muscleRepository, EquipmentRepository equipmentRepository) {
+    public ExerciseCrud(ExerciseRepository exerciseRepository, ExerciseTypeRepository exerciseTypeRepository, MuscleRepository muscleRepository, EquipmentRepository equipmentRepository, TemplateExerciseRepository templateExerciseRepository, TemplateWeekRepository templateWeekRepository) {
         this.exerciseRepository = exerciseRepository;
         this.exerciseTypeRepository = exerciseTypeRepository;
         this.muscleRepository = muscleRepository;
         this.equipmentRepository = equipmentRepository;
+        this.templateExerciseRepository = templateExerciseRepository;
+        this.templateWeekRepository = templateWeekRepository;
     }
 
     @Override
@@ -120,6 +122,22 @@ public class ExerciseCrud implements ExerciseCrudService {
         } catch (DataIntegrityViolationException e) {
             throw new RuntimeException("No es posible eliminar este ejercicio ya que se encuentra asociado a otra entidad.");
         }
+    }
+
+    @Override
+    public  List<ExerciseTemplateResponse>  getTemplateWeek() {
+        return null;
+    }
+
+    @Override
+    public List<ExerciseTemplateResponse> getTemplateExercises() {
+
+        return templateExerciseRepository.findAll()
+                .stream()
+                .map(template -> ExerciseTemplateResponse.mapFrom(template))
+                .toList();
+
+
     }
 
 }

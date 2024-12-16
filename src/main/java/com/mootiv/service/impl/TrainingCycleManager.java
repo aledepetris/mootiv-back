@@ -2,6 +2,9 @@ package com.mootiv.service.impl;
 
 
 import com.mootiv.domain.Exercise;
+import com.mootiv.domain.exporter.CsvRutinaExporter;
+import com.mootiv.domain.exporter.PdfRutinaExporter;
+import com.mootiv.domain.exporter.RutinaExporter;
 import com.mootiv.domain.plan.CycleStatus;
 import com.mootiv.domain.plan.ExerciseRoutine;
 import com.mootiv.domain.plan.TrainingWeekStatus;
@@ -26,16 +29,18 @@ public class TrainingCycleManager implements TrainingCycleService {
     private final TrainingTypeRepository trainingTypeRepository;
     private final GoalRepository goalRepository;
     private final ExerciseRepository exerciseRepository;
+    private final TrainingCycleRepository trainingCycleRepository;
     private final TrainingDayRepository trainingDayRepository;
     private final TrainingWeekRepository trainingWeekRepository;
 
     public TrainingCycleManager(StudentRepository studentRepository,
                                 TrainingTypeRepository trainingTypeRepository,
-                                GoalRepository goalRepository, ExerciseRepository exerciseRepository, TrainingDayRepository trainingDayRepository, TrainingWeekRepository trainingWeekRepository) {
+                                GoalRepository goalRepository, ExerciseRepository exerciseRepository, TrainingCycleRepository trainingCycleRepository, TrainingDayRepository trainingDayRepository, TrainingWeekRepository trainingWeekRepository) {
         this.studentRepository = studentRepository;
         this.trainingTypeRepository = trainingTypeRepository;
         this.goalRepository = goalRepository;
         this.exerciseRepository = exerciseRepository;
+        this.trainingCycleRepository = trainingCycleRepository;
         this.trainingDayRepository = trainingDayRepository;
         this.trainingWeekRepository = trainingWeekRepository;
     }
@@ -179,6 +184,21 @@ public class TrainingCycleManager implements TrainingCycleService {
             throw new RuntimeException("El estado al que intenta cambiar no es posible transicionar");
 
         trainingWeekRepository.save(week);
+    }
+
+    @Override
+    public String generateWeekFile(Integer cycleId, Integer weekId, String fileType) {
+
+        var ciclo = trainingCycleRepository.getReferenceById(cycleId);
+
+        if (fileType.equals("pdf")) {
+            RutinaExporter pdfExporter = new PdfRutinaExporter(ciclo);
+            return pdfExporter.generateRoutineFile(weekId);
+        }
+
+        RutinaExporter csvExporter = new CsvRutinaExporter(ciclo);
+        return csvExporter.generateRoutineFile(weekId);
+
     }
 
 }

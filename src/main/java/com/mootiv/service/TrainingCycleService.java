@@ -27,4 +27,6 @@ public interface TrainingCycleService {
     void finishDay(Integer idStudent, Integer idDay);
 
     void cambiarSemanaEstado(Integer idStudent, Integer idWeek, TrainingWeekStatus cycleStatus);
+
+    String generateWeekFile(Integer cycleId, Integer weekId, String fileType);
 }

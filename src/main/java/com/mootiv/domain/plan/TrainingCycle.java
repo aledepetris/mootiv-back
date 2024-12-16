@@ -16,7 +16,7 @@ import java.util.stream.IntStream;
 
 @Entity
 @Getter @Setter
-@NoArgsConstructor(access = AccessLevel.PRIVATE)
+@NoArgsConstructor
 @Log4j2
 public class TrainingCycle {
 
@@ -74,9 +74,6 @@ public class TrainingCycle {
     public void changeToCompleted() {
        if (weeks.stream().allMatch(TrainingWeek::inFinalState))
            this.status = CycleStatus.COMPLETADO;
-       else
-           log.info("No es posible completar el ciclo ya que algunos de las semanas no estan en estados finales.");
-
     }
 
     public void createWeeksOfTraining(LocalDate startDate, Integer weeks, Integer numberOfDays) {

@@ -84,4 +84,13 @@ public class TrainingCycleController {
         return ResponseEntity.ok(trainingCycleService.getTrainingCycleAvailableExercise(idStudent, idTrainingCycle));
     }
 
+    @GetMapping("/{idTrainingCycle}/week/{weekId}/export/{fileType}")
+    public ResponseEntity<String> exportWeek(
+            @PathVariable Integer idTrainingCycle,
+            @PathVariable Integer weekId,
+            @PathVariable String fileType) {
+        String base64File = trainingCycleService.generateWeekFile(idTrainingCycle, weekId, fileType);
+        return ResponseEntity.ok(base64File);
+    }
+
 }

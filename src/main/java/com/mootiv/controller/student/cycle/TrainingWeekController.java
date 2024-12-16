@@ -4,10 +4,7 @@ import com.mootiv.domain.Exercise;
 import com.mootiv.domain.plan.TrainingWeekStatus;
 import com.mootiv.service.TrainingCycleService;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
