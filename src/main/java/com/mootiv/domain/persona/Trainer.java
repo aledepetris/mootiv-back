@@ -24,6 +24,8 @@ public class Trainer extends Person {
 
     protected String lastName;
 
+    protected String alt_img;
+
     protected String email;
 
     protected String telephone;

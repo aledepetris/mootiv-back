@@ -32,6 +32,8 @@ public class TrainerResponse {
 
     private Boolean active;
 
+    private String alt_img;
+
     public static TrainerResponse mapFrom(Trainer trainer) {
         return TrainerResponse.builder()
                 .id(trainer.getId())
@@ -47,6 +49,7 @@ public class TrainerResponse {
                                     .toList()
                         : emptyList())
                 .active(trainer.isActive())
+                .alt_img(trainer.getAlt_img())
                 .build();
     }
 

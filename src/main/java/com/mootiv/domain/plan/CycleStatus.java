@@ -2,10 +2,19 @@ package com.mootiv.domain.plan;
 
 public enum CycleStatus {
 
-    DRAFT,
-    PENDING,
-    IN_PROGRESS,
-    CANCELED,
-    COMPLETED
+    BORRADOR,
+    PENDIENTE,
+    EN_PROGRESO,
+    CANCELADO,
+    COMPLETADO;
+
+    public static boolean isValidValue(String value) {
+        try {
+            CycleStatus.valueOf(value);
+            return true;
+        } catch (Exception e) {
+            return false;
+        }
+    }
 
 }

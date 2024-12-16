@@ -35,5 +35,7 @@ public class TrainerRequest {
 
     @NotNull
     private Boolean active;
+    private String alt_img;
+
 
 }

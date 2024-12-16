@@ -2,6 +2,7 @@ package com.mootiv.domain.plan;
 
 import com.mootiv.domain.TrainingType;
 import com.mootiv.domain.goal.Goal;
+import com.mootiv.error.exception.NotFoundException;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Embeddable;
 import jakarta.persistence.JoinColumn;
@@ -15,6 +16,7 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
+import static com.mootiv.error.ApiMootivErrors.CONDITION_NOT_FOUND;
 import static java.util.Objects.isNull;
 
 @Embeddable
@@ -22,7 +24,7 @@ import static java.util.Objects.isNull;
 @NoArgsConstructor @AllArgsConstructor
 public class TrainingPlan {
 
-    @OneToMany(cascade = CascadeType.ALL)
+    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
     @JoinColumn(name = "student_id")
     private List<TrainingCycle> trainingCycles;
 
@@ -49,4 +51,24 @@ public class TrainingPlan {
         trainingCycles.add(TrainingCycle.with(startDate, numberOfWeeks, numberOfDays, goal, trainingType));
 
     }
+
+    public TrainingCycle getCycleById(Integer idCycle) {
+        return this.trainingCycles.stream().filter(x -> x.getId().equals(idCycle)).findFirst()
+                .orElseThrow(NotFoundException.of(CONDITION_NOT_FOUND));
+
+    }
+
+    public void deleteCycleById(Integer idCycle) {
+        var cycle = this.trainingCycles.stream().filter(x -> x.getId().equals(idCycle)).findFirst()
+                .orElseThrow(NotFoundException.of(CONDITION_NOT_FOUND));
+
+        if (cycle.canBeDeleted()) {
+            this.trainingCycles.remove(cycle);
+        } else {
+            throw new RuntimeException("No es posible borrar el ciclo en el estado actual");
+        }
+
+
+    }
+
 }

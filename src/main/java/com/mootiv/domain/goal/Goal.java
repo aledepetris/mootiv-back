@@ -55,9 +55,15 @@ public class Goal {
     }
 
     public boolean validNumberOfDaysAndTraining(Integer numberOfDays, TrainingType trainingType) {
-        return this.scheduleGoals.stream().filter(scheduleGoal -> scheduleGoal.getDayOfTraining().equals(numberOfDays))
+        var goal = this.scheduleGoals.stream()
+                .filter(scheduleGoal -> scheduleGoal.getDayOfTraining().equals(numberOfDays))
                 .findFirst()
-                .orElseThrow(NotFoundException.of(GOAL_DAY_NOT_FOUND))
-                        .getTrainingTypes().contains(trainingType);
+                .orElseThrow(NotFoundException.of(GOAL_DAY_NOT_FOUND));
+
+        var types = goal.getTrainingTypes().stream().filter(type -> type.getId().equals(trainingType.getId()))
+                .findFirst();
+
+        return types.isPresent();
+
     }
 }

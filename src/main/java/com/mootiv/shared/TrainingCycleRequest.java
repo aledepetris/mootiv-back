@@ -7,7 +7,7 @@ import lombok.Setter;
 import java.time.LocalDate;
 
 @Getter @Setter
-public class CycleRequest {
+public class TrainingCycleRequest {
 
     @NotNull
     private LocalDate startDate;
@@ -23,5 +23,7 @@ public class CycleRequest {
 
     @NotNull
     private Integer idGoal;
+
+    private String status;
 
 }

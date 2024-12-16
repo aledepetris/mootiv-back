@@ -1,5 +1,7 @@
 package com.mootiv.controller.student;
 
+import com.mootiv.domain.Exercise;
+import com.mootiv.domain.plan.ExerciseRoutine;
 import com.mootiv.service.StudentCrudService;
 import com.mootiv.shared.StudentRequest;
 import com.mootiv.shared.StudentResponse;

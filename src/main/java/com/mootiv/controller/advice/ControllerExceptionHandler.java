@@ -154,7 +154,7 @@ public class ControllerExceptionHandler {
 			return ex.getCause().toString() + ex.getMessage();
 		}
 		log.error("Ocurrio un error:  " + ex.getClass().toString());
-		return "Exception: " + ex.getMessage();
+		return ex.getMessage();
 	}
 
 }

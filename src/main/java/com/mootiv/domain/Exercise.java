@@ -1,5 +1,6 @@
 package com.mootiv.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.mootiv.domain.muscle.Muscle;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
@@ -18,15 +19,13 @@ public class Exercise {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
-
     private String name;
-
     private String description;
     private String alt_img;
     private boolean isForTime;
-
     private boolean isTotal;
 
+    @JsonIgnore
     @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(
             name = "exercise_muscle",
@@ -35,9 +34,11 @@ public class Exercise {
     )
     Set<Muscle> muscles;
 
+    @JsonIgnore
     @ManyToMany(fetch = FetchType.LAZY)
     Set<ExerciseType> exercisesType;
 
+    @JsonIgnore
     @ManyToMany(fetch = FetchType.LAZY)
     Set<Equipment> equipments;
 

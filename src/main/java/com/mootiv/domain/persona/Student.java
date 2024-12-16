@@ -35,6 +35,8 @@ public class Student extends Person {
 
     protected String email;
 
+    protected String alt_img;
+
     protected String telephone;
 
     protected LocalDate birthdate;

@@ -35,5 +35,7 @@ public class StudentRequest {
     private Boolean active;
 
     private LocalDate startDate;
+    private String alt_img;
+
 
 }

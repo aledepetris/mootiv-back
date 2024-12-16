@@ -28,10 +28,11 @@ public class StudentResponse {
     private String telephone;
     private LocalDate birthdate;
     private Boolean active;
-    private List<TrainingCycle> trainingCycles;
-    private Set<Measure> measures;
-    private Set<Condition> medicalHistory;
-    private Set<TrainingPlace> trainingPlaces;
+    private String alt_img;
+//    private List<TrainingCycle> trainingCycles;
+//    private Set<Measure> measures;
+//    private Set<Condition> medicalHistory;
+//    private Set<TrainingPlace> trainingPlaces;
 
     public static StudentResponse mapFrom(Student student) {
         return StudentResponse.builder()
@@ -47,6 +48,7 @@ public class StudentResponse {
                 .telephone(student.getTelephone())
                 .birthdate(student.getBirthdate())
                 .active(student.isActive())
+                .alt_img(student.getAlt_img())
                 .build();
     }
 

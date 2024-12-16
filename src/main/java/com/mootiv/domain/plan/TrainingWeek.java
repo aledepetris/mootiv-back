@@ -20,52 +20,55 @@ public class TrainingWeek {
     private Integer id;
     private LocalDate startDate;
     @OneToMany(cascade = CascadeType.ALL)
+    @JoinColumn(name = "training_week_id")
     private List<TrainingDay> days;
+    @Enumerated(EnumType.STRING)
     private TrainingWeekStatus status;
 
     public boolean canBeEdited() {
-        return this.status.equals(TrainingWeekStatus.COMPLETED)
-                || this.status.equals(TrainingWeekStatus.POSTPONED)
-                || this.status.equals(TrainingWeekStatus.CANCELED);
+        return this.status.equals(TrainingWeekStatus.COMPLETEDA)
+                || this.status.equals(TrainingWeekStatus.POSPUESTA)
+                || this.status.equals(TrainingWeekStatus.CANCELEDA);
     }
 
     public void changeToPending() {
-        if (this.status.equals(TrainingWeekStatus.DRAFT)) {
-            this.status = TrainingWeekStatus.PENDING;
+        if (this.status.equals(TrainingWeekStatus.BORRADOR)) {
+            this.status = TrainingWeekStatus.PENDIENTE;
         } else {
-            throw new RuntimeException("No es posible pasar a PENDING desde " + this.status.name());
+            throw new RuntimeException("No es posible pasar a PENDIENTE desde " + this.status.name());
         }
     }
 
     public void changeToInProgress() {
-        if (this.status.equals(TrainingWeekStatus.DRAFT)) {
-            this.status = TrainingWeekStatus.PENDING;
+        if (this.status.equals(TrainingWeekStatus.PENDIENTE)) {
+            this.status = TrainingWeekStatus.EN_PROGRESO;
         } else {
-            throw new RuntimeException("No es posible pasar a PENDING desde " + this.status.name());
+            throw new RuntimeException("No es posible pasar a EN_PROGRESO desde " + this.status.name());
         }
     }
 
     public void changeToCanceled() {
-        if (!this.status.equals(TrainingWeekStatus.COMPLETED) && !this.status.equals(TrainingWeekStatus.POSTPONED)) {
-            this.status = TrainingWeekStatus.CANCELED;
+        if (!this.status.equals(TrainingWeekStatus.COMPLETEDA) && !this.status.equals(TrainingWeekStatus.POSPUESTA)) {
+            this.status = TrainingWeekStatus.CANCELEDA;
+            this.days.stream().forEach(trainingDay -> trainingDay.setFinishDate(LocalDate.now()));
         }
     }
 
     public void changeToPostponed() {
-        if (this.status.equals(TrainingWeekStatus.IN_PROGRESS) || this.status.equals(TrainingWeekStatus.PENDING)) {
-            this.status = TrainingWeekStatus.POSTPONED;
+        if (this.status.equals(TrainingWeekStatus.EN_PROGRESO) || this.status.equals(TrainingWeekStatus.PENDIENTE)) {
+            this.status = TrainingWeekStatus.POSPUESTA;
         } else {
             throw new RuntimeException("No es posible pasar a POSTPONED desde " + this.status.name());
         }
     }
 
     public void changeToComplete() {
-        if (isCompleted()) {
-            this.status = TrainingWeekStatus.COMPLETED;
+        if (completed() || LocalDate.now().isAfter(this.startDate.plusDays(7))) {
+            this.status = TrainingWeekStatus.COMPLETEDA;
         }
     }
 
-    public TrainingDay getLastDayTrained() {
+    public TrainingDay lastDayTrained() {
         if (days == null || days.isEmpty()) {
             throw new RuntimeException("No training days available.");
         }
@@ -76,7 +79,7 @@ public class TrainingWeek {
                 .orElseThrow(() -> new RuntimeException("No completed training days found."));
     }
 
-    public LocalDate getDateOfFinish() {
+    public LocalDate dateOfFinish() {
         if (days == null || days.isEmpty()) {
             throw new RuntimeException("No training days available.");
         }
@@ -97,12 +100,12 @@ public class TrainingWeek {
 
     }
 
-    public boolean isCompleted() {
+    public boolean completed() {
         return this.days.stream().allMatch(TrainingDay::isCompleted);
     }
 
-    public boolean isInFinalState() {
-        return this.status.equals(TrainingWeekStatus.COMPLETED) || this.status.equals(TrainingWeekStatus.POSTPONED);
+    public boolean inFinalState() {
+        return this.status.equals(TrainingWeekStatus.COMPLETEDA) || this.status.equals(TrainingWeekStatus.POSPUESTA);
     }
 
     public void createDaysOfTraining(Integer daysOfTraining) {
@@ -114,7 +117,7 @@ public class TrainingWeek {
     public static TrainingWeek with(LocalDate weekStartDate, Integer daysOfTraining) {
         var trainingWeek = new TrainingWeek();
         trainingWeek.setStartDate(weekStartDate);
-        trainingWeek.setStatus(TrainingWeekStatus.DRAFT);
+        trainingWeek.setStatus(TrainingWeekStatus.BORRADOR);
         trainingWeek.createDaysOfTraining(daysOfTraining);
         return trainingWeek;
     }

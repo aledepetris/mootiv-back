@@ -8,6 +8,7 @@ import java.time.LocalDate;
 import java.util.List;
 
 import static java.util.Objects.isNull;
+import static java.util.Objects.nonNull;
 
 @Entity
 @Getter @Setter
@@ -22,7 +23,7 @@ public class TrainingDay {
     private List<ExerciseRoutine> exercises;
 
     public boolean isCompleted() {
-        return isNull(this.finishDate);
+        return nonNull(this.finishDate);
     }
 
 }
