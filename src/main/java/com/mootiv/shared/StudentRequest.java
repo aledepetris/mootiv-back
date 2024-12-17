@@ -32,8 +32,6 @@ public class StudentRequest {
     @NotNull @DateTimeFormat
     private LocalDate birthdate;
 
-    private Boolean active;
-
     private LocalDate startDate;
     private String alt_img;
 

@@ -2,11 +2,11 @@ package com.mootiv.domain.persona;
 
 import com.mootiv.shared.TrainerRequest;
 import jakarta.persistence.*;
-import lombok.*;
-import org.aspectj.apache.bcel.generic.RET;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import java.time.LocalDate;
-import java.time.Period;
 import java.util.Set;
 
 @Entity
@@ -36,8 +36,6 @@ public class Trainer extends Person {
     @JoinColumn(name = "trainer_id")
     private Set<Student> students;
 
-    private boolean active;
-
     public static Trainer createFrom(TrainerRequest request, Set<Student> students) {
         Trainer trainer = new Trainer();
         trainer.setDni(request.getDni());
@@ -46,8 +44,8 @@ public class Trainer extends Person {
         trainer.setEmail(request.getEmail());
         trainer.setTelephone(request.getTelephone());
         trainer.setBirthdate(request.getBirthdate());
-        trainer.setActive(request.getActive());
         trainer.setStudents(students);
+        trainer.setAlt_img(request.getAlt_img());
         return trainer;
     }
 
@@ -58,7 +56,7 @@ public class Trainer extends Person {
         this.email = request.getEmail();
         this.telephone = request.getTelephone();
         this.birthdate = request.getBirthdate();
-        this.active = request.getActive();
+        this.alt_img =request.getAlt_img();
         this.students = students;
     }
 

@@ -22,4 +22,7 @@ public class Condition {
     private ConditionStatus currentStatus;
     private String notes;
 
+    public boolean isActive() {
+        return currentStatus.equals(ConditionStatus.ACTIVA);
+    }
 }

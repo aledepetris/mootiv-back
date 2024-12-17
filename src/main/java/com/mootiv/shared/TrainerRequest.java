@@ -33,8 +33,6 @@ public class TrainerRequest {
 
     private List<Integer> idsStudents;
 
-    @NotNull
-    private Boolean active;
     private String alt_img;
 
 

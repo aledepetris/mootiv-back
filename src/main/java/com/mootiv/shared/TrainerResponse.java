@@ -30,8 +30,6 @@ public class TrainerResponse {
 
     private List<StudentResponse> students;
 
-    private Boolean active;
-
     private String alt_img;
 
     public static TrainerResponse mapFrom(Trainer trainer) {
@@ -48,7 +46,6 @@ public class TrainerResponse {
                                     .map(StudentResponse::mapFrom)
                                     .toList()
                         : emptyList())
-                .active(trainer.isActive())
                 .alt_img(trainer.getAlt_img())
                 .build();
     }

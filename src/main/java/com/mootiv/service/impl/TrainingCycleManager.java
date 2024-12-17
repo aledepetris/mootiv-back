@@ -1,10 +1,12 @@
 package com.mootiv.service.impl;
 
 
-import com.mootiv.domain.Exercise;
+import com.mootiv.domain.*;
 import com.mootiv.domain.exporter.CsvRutinaExporter;
 import com.mootiv.domain.exporter.PdfRutinaExporter;
 import com.mootiv.domain.exporter.RutinaExporter;
+import com.mootiv.domain.muscle.Muscle;
+import com.mootiv.domain.persona.ClinicalHistory;
 import com.mootiv.domain.plan.CycleStatus;
 import com.mootiv.domain.plan.ExerciseRoutine;
 import com.mootiv.domain.plan.TrainingWeekStatus;
@@ -15,9 +17,8 @@ import com.mootiv.shared.*;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
+import java.util.*;
+import java.util.stream.Collectors;
 
 import static com.mootiv.error.ApiMootivErrors.*;
 import static java.util.Objects.nonNull;
@@ -142,7 +143,52 @@ public class TrainingCycleManager implements TrainingCycleService {
 
     @Override
     public List<Exercise> getTrainingCycleAvailableExercise(Integer idStudent, Integer idTrainingCycle) {
-        return exerciseRepository.findAll();
+
+        var ciclo = trainingCycleRepository.findById(idTrainingCycle)
+                .orElseThrow(() -> new RuntimeException("No se encontro el ciclo"));
+        var student = studentRepository.findById(idStudent)
+                .orElseThrow(() -> new RuntimeException("No se encontro el estudiante"));
+
+        Set<Muscle> affectedMuscles = Optional.ofNullable(student.getClinicalHistory())
+                .map(ClinicalHistory::getConditions)
+                .orElse(Collections.emptySet()) // Si no hay condiciones, devuelve un conjunto vacío
+                .stream()
+                .filter(Condition::isActive) // Solo condiciones activas
+                .map(condition -> condition.getAffection()) // Obtener la afección de cada condición
+                .filter(Objects::nonNull) // Asegurarse de que la afección no sea null
+                .flatMap(affection -> affection.getMusclesAffected().stream()) // Obtener los músculos afectados
+                .collect(Collectors.toSet());
+
+        Set<ExerciseType> validExerciseTypes = ciclo.getTrainingType().getExerciseTypes();
+
+        // Equipamientos disponibles en el lugar de entrenamiento del estudiante
+        Set<Equipment> availableEquipments = Optional.ofNullable(student.getTrainingPlaces())
+                .orElse(Collections.emptySet()) // Si no hay lugares, devuelve una lista vacía
+                .stream()
+                .map(TrainingPlace::getEquipments)
+                .filter(Objects::nonNull) // Evitar equipamientos nulos
+                .flatMap(Set::stream)
+                .collect(Collectors.toSet());
+
+
+        return exerciseRepository.findAll()
+                .stream()
+                // 1. Filtrar por tipos de ejercicios válidos
+                .filter(exercise -> exercise.getExercisesType()
+                        .stream()
+                        .anyMatch(validExerciseTypes::contains))
+                // 2. Excluir ejercicios que tienen músculos afectados
+                .filter(exercise -> exercise.getMuscles()
+                        .stream()
+                        .noneMatch(affectedMuscles::contains))
+                // 3. Incluir ejercicios con equipamiento necesario o sin equipamiento
+                .filter(exercise -> {
+                    Set<Equipment> requiredEquipments = exercise.getEquipments();
+                    return requiredEquipments == null || requiredEquipments.isEmpty() ||
+                            availableEquipments.containsAll(requiredEquipments);
+                })
+                .toList();
+
     }
 
     @Override

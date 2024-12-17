@@ -27,7 +27,6 @@ public class StudentResponse {
     private String email;
     private String telephone;
     private LocalDate birthdate;
-    private Boolean active;
     private String alt_img;
 //    private List<TrainingCycle> trainingCycles;
 //    private Set<Measure> measures;
@@ -47,7 +46,6 @@ public class StudentResponse {
                 .email(student.getEmail())
                 .telephone(student.getTelephone())
                 .birthdate(student.getBirthdate())
-                .active(student.isActive())
                 .alt_img(student.getAlt_img())
                 .build();
     }

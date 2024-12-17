@@ -43,8 +43,6 @@ public class Student extends Person {
 
     private LocalDate startDate;
 
-    private boolean active;
-
     @ManyToOne(cascade = CascadeType.DETACH, fetch = FetchType.LAZY)
     private Trainer trainer;
 
@@ -70,8 +68,8 @@ public class Student extends Person {
         student.setEmail(request.getEmail());
         student.setTelephone(request.getTelephone());
         student.setBirthdate(request.getBirthdate());
+        student.setAlt_img(request.getAlt_img());
         student.setStartDate(request.getStartDate());
-        student.setActive(request.getActive());
         student.setTrainer(trainer);
         return student;
     }
@@ -84,7 +82,7 @@ public class Student extends Person {
         this.telephone = request.getTelephone();
         this.birthdate = request.getBirthdate();
         this.startDate = request.getStartDate();
-        this.active = request.getActive();
+        this.alt_img = request.getAlt_img();
         this.trainer = trainer;
     }
 

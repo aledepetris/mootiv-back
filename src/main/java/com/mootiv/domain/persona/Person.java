@@ -19,8 +19,6 @@ public abstract class Person {
 
     protected LocalDate birthdate;
 
-    private boolean active;
-
     public Integer getAge() {
         if (birthdate == null) {
             throw new IllegalStateException("Birthdate is not set");
