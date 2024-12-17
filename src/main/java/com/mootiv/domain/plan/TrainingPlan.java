@@ -28,18 +28,17 @@ public class TrainingPlan {
     @JoinColumn(name = "student_id")
     private List<TrainingCycle> trainingCycles;
 
-    public void createNewCycle(LocalDate startDate, Integer numberOfWeeks, Integer numberOfDays, Goal goal, TrainingType trainingType) {
+    public void createNewCycle(LocalDate startDate, Integer numberOfWeeks, Integer numberOfDays,
+                               Goal goal, TrainingType trainingType) {
 
         if (isNull(trainingCycles)) {
             trainingCycles = new ArrayList<>();
         }
 
-        // Validar que la fecha de inicio no esté en el pasado
         if (startDate.isBefore(LocalDate.now())) {
             throw new IllegalArgumentException("El inicio del ciclo no puede ser una fecha pasada.");
         }
 
-        // Validar que no haya superposición de fechas con otros ciclos vigentes
         boolean hasOverlap = trainingCycles.stream()
                 .filter(cycle -> !cycle.isCanceled())
                 .anyMatch(cycle -> cycle.overlapsWith(startDate, numberOfWeeks));
@@ -49,12 +48,6 @@ public class TrainingPlan {
         }
 
         trainingCycles.add(TrainingCycle.with(startDate, numberOfWeeks, numberOfDays, goal, trainingType));
-
-    }
-
-    public TrainingCycle getCycleById(Integer idCycle) {
-        return this.trainingCycles.stream().filter(x -> x.getId().equals(idCycle)).findFirst()
-                .orElseThrow(NotFoundException.of(CONDITION_NOT_FOUND));
 
     }
 
@@ -68,7 +61,13 @@ public class TrainingPlan {
             throw new RuntimeException("No es posible borrar el ciclo en el estado actual");
         }
 
+    }
+
+    public TrainingCycle getCycleById(Integer idCycle) {
+        return this.trainingCycles.stream().filter(x -> x.getId().equals(idCycle)).findFirst()
+                .orElseThrow(NotFoundException.of(CONDITION_NOT_FOUND));
 
     }
+
 
 }
